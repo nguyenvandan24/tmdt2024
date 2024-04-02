@@ -1,3 +1,8 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,6 +41,7 @@
                 <a class="text-dark" href="">Help</a>
                 <span class="text-muted px-2">|</span>
                 <a class="text-dark" href="">Support</a>
+
             </div>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
@@ -144,8 +150,8 @@
                         <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link">Login</a>
-                        <a href="" class="nav-item nav-link">Register</a>
+                        <a href="login.jsp" class="nav-item nav-link">Login</a>
+                        <a href="register.jsp" class="nav-item nav-link">Register</a>
                     </div>
                 </div>
             </nav>
