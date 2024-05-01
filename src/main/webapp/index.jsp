@@ -113,7 +113,7 @@
                 <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
 
                     <c:forEach items="${categories}" var="category">
-                        <a href="ProductServlet?category=${category.catID}" class="dropdown-item">${category.nameCate}</a>
+                        <a href="ProductServlet?cid=${category.catID}" class="dropdown-item">${category.nameCate}</a>
                     </c:forEach>
 
                 </div>
