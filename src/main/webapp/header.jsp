@@ -29,23 +29,49 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutButton = document.getElementById('logout');
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    // Remove user data from localStorage
+                    localStorage.removeItem('user');
+                    fetch('logout')
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.href = 'login.jsp';
+                            } else {
+                                console.error('Logout failed.');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            }
+        });
+    </script>
 </head>
 
 <body>
-<!-- Topbar Start
+<!-- Topbar Start -->
 <div class="container-fluid">
     <div class="row bg-secondary py-2 px-xl-5">
         <div class="col-lg-6 d-none d-lg-block">
-            <!--<div class="d-inline-flex align-items-center">
+            <div class="d-inline-flex align-items-center">
                 <a class="text-dark" href="">FAQs</a>
                 <span class="text-muted px-2">|</span>
                 <a class="text-dark" href="">Help</a>
                 <span class="text-muted px-2">|</span>
                 <a class="text-dark" href="">Support</a>
+                <span class="text-muted px-2">|</span>
+                <c:if test="${not empty user}">
+                    <a class="text-dark">Hello ${user.username}</a>
+                </c:if>
 
-            </div>-->
+            </div>
         </div>
-        <!--<div class="col-lg-6 text-center text-lg-right">
+        <div class="col-lg-6 text-center text-lg-right">
             <div class="d-inline-flex align-items-center">
                 <a class="text-dark px-2" href="">
                     <i class="fab fa-facebook-f"></i>
@@ -63,7 +89,7 @@
                     <i class="fab fa-youtube"></i>
                 </a>
             </div>
-        </div>-->
+        </div>
     </div>
     <div class="row align-items-center py-3 px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
@@ -96,7 +122,6 @@
     </div>
 </div>
 <!-- Topbar End -->
-
 
 <!-- Navbar Start -->
 <div class="container-fluid">
@@ -136,8 +161,13 @@
                         <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="login.jsp" class="nav-item nav-link">Đăng nhập</a>
-                        <a href="register.jsp" class="nav-item nav-link">Đăng ký</a>
+                        <c:if test="${empty user}">
+                            <a href="login.jsp" class="nav-item nav-link">Đăng nhập</a>
+                            <a href="register.jsp" class="nav-item nav-link">Đăng ký</a>
+                        </c:if>
+                        <c:if test="${not empty user}">
+                            <a href="#" class="nav-item nav-link" id="logout">Đăng xuất</a>
+                        </c:if>
                     </div>
                 </div>
             </nav>

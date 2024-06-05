@@ -27,6 +27,25 @@
 
   <!-- Customized Bootstrap Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.querySelector('#loginForm');
+      loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(loginForm);
+        fetch('login', {
+          method: 'POST',
+          body: formData
+        })
+                .then(response => response.json())
+                .then(data => {
+                  localStorage.setItem('user', JSON.stringify(data));
+                  window.location.href = data.roles == 0 ? '/admin/admin-index.jsp' : 'index.jsp';
+                })
+                .catch(error => console.error('Error:', error));
+      });
+    });
+  </script>
 </head>
 <style>
   body {
@@ -233,6 +252,9 @@
 
 <div class="container">
   <h2>Login</h2>
+  <c:if test="${not empty message}">
+    <p>${message}</p>
+  </c:if>
   <form action="login" method="POST">
     <div class="form-group">
       <label for="username">Username</label>

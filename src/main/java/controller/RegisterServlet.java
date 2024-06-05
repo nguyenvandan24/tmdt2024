@@ -60,7 +60,7 @@ public class RegisterServlet extends HttpServlet {
             password = EncryptPass.toSHA1(password);
             // Nếu username chưa tồn tại, thực hiện đăng ký
             userDAO.registerUser(fullname, username, email, phone, address, password);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("login.jsp");
         } else {
             // Nếu username đã tồn tại, chuyển hướng lại trang đăng ký với thông báo lỗi
             request.setAttribute("errorMessage", "Username already exists.");
