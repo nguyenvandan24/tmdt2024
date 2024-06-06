@@ -147,23 +147,24 @@ public class Load {
     }
     //tìm kiem
     public List<Product> searchByName(String txtSearch) {
-        List<Product> list = new ArrayList<>();// danh sach san pham
-        String query = "select * from PRODUCTS where namePro like  ?";
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM PRODUCTS WHERE namePro LIKE ?";
         try {
-            conn = new Conn().getconnecttion();// mo ket noi
-            ps = conn.prepareStatement(query);// nem lenh query
+            conn = new Conn().getconnecttion();
+            ps = conn.prepareStatement(query);
             ps.setString(1, "%" + txtSearch + "%");
             rs = ps.executeQuery();
-            while (rs.next())
-                list.add(new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDouble(5),rs.getString(6), rs.getString(7),
-                        rs.getString(8), rs.getInt(9),rs.getInt(10)));
-
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDouble(5),
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getInt(10)
+                ));
+            }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-
+        // Debug statement to check the list size
+        System.out.println("Number of products found: " + list.size());
         return list;
     }
-
-
 }

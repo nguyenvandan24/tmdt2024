@@ -175,13 +175,13 @@
             <div class="row pb-3">
                 <div class="col-12 pb-1">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <form action="">
+                        <form action="SearchServlet" method="get">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search by name">
+                                <input type="text" name="txtSearch" value="${param.txtSearch}" class="form-control" placeholder="Search by name">
                                 <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i>
-                                        </span>
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -256,8 +256,36 @@
                      </c:otherwise>
                  </c:choose>
 
-
-
+                <c:choose>
+                    <c:when test="${not empty search_products}">
+                        <c:forEach items="${search_products}" var="product">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="card product-item border-0 mb-4">
+                                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                        <img class="img-fluid w-100" src="${product.img}" alt="">
+                                    </div>
+                                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                        <h6 class="text-truncate mb-3">${product.namePro}</h6>
+                                        <div class="d-flex justify-content-center">
+                                            <h6>${product.price} VND</h6><h6 class="text-muted ml-2"></h6>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-between bg-light border">
+                                        <a href="DetailServlet?id=${product.proID}" class="btn btn-sm text-dark p-0">
+                                            <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                        </a>
+                                        <a href="cart.jsp" class="btn btn-sm text-dark p-0">
+                                            <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>No products found</p>
+                    </c:otherwise>
+                </c:choose>
 
                 <div class="col-12 pb-1">
                     <nav aria-label="Page navigation">
