@@ -36,7 +36,7 @@
         padding: 0;
     }
 
-    .container {
+    .container-register {
         width: 40%;
         margin: 50px auto;
         background-color: #fff;
@@ -82,6 +82,12 @@
         background-color: #e4606d;
     }
 
+    .error {
+        color: red; /* Set the error message color to red */
+        font-size: small;
+        margin-top: 5px;
+    }
+
 </style>
 
 <body>
@@ -99,37 +105,44 @@
 </div>
 <!-- Page Header End -->
 
-<div class="container">
+<div class="container-register">
     <h2>Registration Form</h2>
-    <form action="register" method="POST">
+    <form id="registerForm" action="register" method="POST">
         <p class="text-danger">${errorMessage}</p>
         <div class="form-group">
             <label for="fullname">Full Name</label>
             <input type="text" id="fullname" name="fullname" placeholder="Enter your full name." required>
+            <span id="fullnameError" class="error"></span>
         </div>
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username." required>
+            <span id="usernameError" class="error"></span>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Enter your email." required>
+            <span id="emailError" class="error"></span>
         </div>
         <div class="form-group">
             <label for="phone">Phone</label>
             <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            <span id="phoneError" class="error"></span>
         </div>
         <div class="form-group">
             <label for="address">Address</label>
             <input type="text" id="address" name="address" placeholder="Enter your address." required>
+            <span id="addressError" class="error"></span>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password." required>
+            <span id="passwordError" class="error"></span>
         </div>
         <div class="form-group">
             <label for="repassword">Confirm Password</label>
             <input type="password" id="repassword" name="repassword" placeholder="Enter your password again." required>
+            <span id="repasswordError" class="error"></span>
         </div>
         <button type="submit">Register</button>
     </form>
@@ -223,6 +236,7 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script src="js/register.js"></script>
 </body>
 
 </html>

@@ -26,7 +26,7 @@
   <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
   <!-- Customized Bootstrap Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
+<%--  <link href="css/style.css" rel="stylesheet">--%>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const loginForm = document.querySelector('#loginForm');
@@ -55,7 +55,7 @@
     padding: 0;
   }
 
-  .container {
+  .container-login {
     width: 40%;
     margin: 50px auto;
     background-color: #fff;
@@ -122,7 +122,7 @@
 </div>
 <!-- Page Header End -->
 
-<div class="container">
+<div class="container-login">
   <h2>Login</h2>
   <c:if test="${not empty message}">
     <p>${message}</p>

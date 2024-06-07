@@ -33,19 +33,19 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // Kiểm tra độ dài của mật khẩu
-        if (password.length() < 6) {
-            request.setAttribute("errorMessage", "Password must be at least 6 characters long.");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-            return;
-        }
-
-        // Kiểm tra số điện thoại không quá số
-        if (phone.length() > 11) {
-            request.setAttribute("errorMessage", "Phone number is too long.");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-            return;
-        }
+//        // Kiểm tra độ dài của mật khẩu
+//        if (password.length() < 6) {
+//            request.setAttribute("errorMessage", "Password must be at least 6 characters long.");
+//            request.getRequestDispatcher("register.jsp").forward(request, response);
+//            return;
+//        }
+//
+//        // Kiểm tra số điện thoại không quá số
+//        if (phone.length() > 11) {
+//            request.setAttribute("errorMessage", "Phone number is too long.");
+//            request.getRequestDispatcher("register.jsp").forward(request, response);
+//            return;
+//        }
 
         // Kiểm tra mật khẩu và mật khẩu xác nhận khớp nhau
         if (!password.equals(confirmPassword)) {
