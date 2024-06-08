@@ -167,4 +167,42 @@ public class Load {
         System.out.println("Number of products found: " + list.size());
         return list;
     }
+
+    public List<Product> getProductsByMultiplePriceRanges(List<String> priceRanges) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM PRODUCTS WHERE";
+
+        for (int i = 0; i < priceRanges.size(); i++) {
+            String[] prices = priceRanges.get(i).split("-");
+            int minPrice = Integer.parseInt(prices[0]);
+            int maxPrice = Integer.parseInt(prices[1]);
+            query += " (price >= " + minPrice + " AND price <= " + maxPrice + ")";
+            if (i < priceRanges.size() - 1) {
+                query += " OR";
+            }
+        }
+
+        try {
+            conn = new Conn().getconnecttion();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDouble(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getInt(10)
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

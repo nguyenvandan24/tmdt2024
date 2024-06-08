@@ -56,41 +56,35 @@
             <!-- Price Start -->
             <div class="border-bottom mb-4 pb-4">
                 <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                <form>
+                <form id="priceFilterForm" action="filter" method="get">
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="price-all">
-                        <label class="custom-control-label" for="price-all">All Price</label>
-                        <span class="badge border font-weight-normal">1000</span>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-0-500000" name="price" value="0-500000"
+                               onchange="submitPriceFilter()" ${param.price == '0-500000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-0-500000">0 - 500,000</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-1">
-                        <label class="custom-control-label" for="price-1">$0 - $100</label>
-                        <span class="badge border font-weight-normal">150</span>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-500000-1000000" name="price" value="500000-1000000"
+                               onchange="submitPriceFilter()" ${param.price == '500000-1000000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-500000-1000000">500,000 - 1,000,000</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-2">
-                        <label class="custom-control-label" for="price-2">$100 - $200</label>
-                        <span class="badge border font-weight-normal">295</span>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1000000-1800000" name="price" value="1000000-1800000"
+                               onchange="submitPriceFilter()" ${param.price == '1000000-1800000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-1000000-1800000">1,000,000 - 1,800,000</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-3">
-                        <label class="custom-control-label" for="price-3">$200 - $300</label>
-                        <span class="badge border font-weight-normal">246</span>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1800000-2500000" name="price" value="1800000-2500000"
+                               onchange="submitPriceFilter()" ${param.price == '1800000-2500000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-1800000-2500000">1,800,000 - 2,500,000</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-4">
-                        <label class="custom-control-label" for="price-4">$300 - $400</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="price-5">
-                        <label class="custom-control-label" for="price-5">$400 - $500</label>
-                        <span class="badge border font-weight-normal">168</span>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-2500000-3500000" name="price" value="2500000-3500000"
+                               onchange="submitPriceFilter()" ${param.price == '2500000-3500000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-2500000-3500000">2,500,000 - 3,500,000</label>
                     </div>
                 </form>
             </div>
             <!-- Price End -->
-
             <!-- Color Start -->
             <div class="border-bottom mb-4 pb-4">
                 <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
@@ -213,7 +207,7 @@
                                      <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                          <h6 class="text-truncate mb-3">${product.namePro}</h6>
                                          <div class="d-flex justify-content-center">
-                                             <h6>${product.price}VND</h6><h6 class="text-muted ml-2"></h6>
+                                             <h6 class="product-price">${product.price}</h6><h6 class="text-muted ml-2"></h6>
                                          </div>
                                      </div>
                                      <!-- Chân sản phẩm -->
@@ -239,7 +233,7 @@
                                                               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                                                   <h6 class="text-truncate mb-3">${product.namePro}</h6>
                                                                   <div class="d-flex justify-content-center">
-                                                                      <h6>${product.price}VND</h6><h6 class="text-muted ml-2"></h6>
+                                                                      <h6 class="product-price">${product.price}</h6><h6 class="text-muted ml-2"></h6>
                                                                   </div>
                                                               </div>
                                                               <div class="card-footer d-flex justify-content-between bg-light border">
@@ -256,37 +250,55 @@
                      </c:otherwise>
                  </c:choose>
 
-                <c:choose>
-                    <c:when test="${not empty search_products}">
-                        <c:forEach items="${search_products}" var="product">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="card product-item border-0 mb-4">
-                                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                        <img class="img-fluid w-100" src="${product.img}" alt="">
-                                    </div>
-                                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                        <h6 class="text-truncate mb-3">${product.namePro}</h6>
-                                        <div class="d-flex justify-content-center">
-                                            <h6>${product.price} VND</h6><h6 class="text-muted ml-2"></h6>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-between bg-light border">
-                                        <a href="DetailServlet?id=${product.proID}" class="btn btn-sm text-dark p-0">
-                                            <i class="fas fa-eye text-primary mr-1"></i>View Detail
-                                        </a>
-                                        <a href="cart.jsp" class="btn btn-sm text-dark p-0">
-                                            <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                                        </a>
-                                    </div>
+
+                <c:forEach items="${search_products}" var="product">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100" src="${product.img}" alt="">
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3">${product.namePro}</h6>
+                                <div class="d-flex justify-content-center">
+                                    <h6 class="product-price">${product.price}</h6><h6 class="text-muted ml-2"></h6>
                                 </div>
                             </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <p>No products found</p>
-                    </c:otherwise>
-                </c:choose>
+                            <div class="card-footer d-flex justify-content-between bg-light border">
+                                <a href="DetailServlet?id=${product.proID}" class="btn btn-sm text-dark p-0">
+                                    <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                </a>
+                                <a href="cart.jsp" class="btn btn-sm text-dark p-0">
+                                    <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
 
+
+                <c:forEach var="product" items="${filteredProducts}">
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100 size_image" src="${product.img}" alt="">
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3">${product.namePro}</h6>
+                                <div class="d-flex justify-content-center">
+                                    <h6 class="product-price">${product.price}</h6><h6 class="text-muted ml-2"></h6>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between bg-light border">
+                                <a href="detail.jsp?proID=${product.proID}" class="btn btn-sm text-dark p-0">
+                                    <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                </a>
+                                <a href="" class="btn btn-sm text-dark p-0">
+                                    <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
                 <div class="col-12 pb-1">
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center mb-3">
@@ -403,6 +415,69 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script>
+    function submitPriceFilter() {
+        const checkboxes = document.querySelectorAll('.price-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    checkboxes.forEach(box => {
+                        if (box !== this) {
+                            box.checked = false;
+                        }
+                    });
+                }
+                document.getElementById('priceFilterForm').submit();
+            });
+        });
+    }
+
+    function submitColorFilter() {
+        const checkboxes = document.querySelectorAll('.color-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    checkboxes.forEach(box => {
+                        if (box !== this) {
+                            box.checked = false;
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    function submitSizeFilter() {
+        const checkboxes = document.querySelectorAll('.size-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    checkboxes.forEach(box => {
+                        if (box !== this) {
+                            box.checked = false;
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        submitPriceFilter();
+        submitColorFilter();
+        submitSizeFilter();
+    });
+    // Hàm để định dạng giá theo định dạng 500,000 VNĐ
+    function formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    }
+
+    // Lặp qua tất cả các thẻ h6 chứa giá và định dạng chúng
+    document.querySelectorAll('.product-price').forEach(function(element) {
+        const price = parseFloat(element.innerText);
+        element.innerText = formatPrice(price);
+    });
+</script>
 </body>
 
 </html>
