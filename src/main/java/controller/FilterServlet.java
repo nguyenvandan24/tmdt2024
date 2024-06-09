@@ -15,22 +15,21 @@ import java.util.List;
 public class FilterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] priceRanges = request.getParameterValues("price");
+        List<String> priceRangeList = (priceRanges != null) ? Arrays.asList(priceRanges) : new ArrayList<>();
 
-        List<Product> filteredProducts = new ArrayList<>();
+        String[] colors = request.getParameterValues("color");
+        List<String> colorList = (colors != null) ? Arrays.asList(colors) : new ArrayList<>();
+
         Load load = new Load();
+        List<Product> filteredProducts = load.getProductsByMultipleFilters(priceRangeList, colorList);
 
-        if (priceRanges != null) {
-            filteredProducts = load.getProductsByMultiplePriceRanges(Arrays.asList(priceRanges));
-        } else {
-            filteredProducts = load.getAllProduct();
-        }
-
-        request.setAttribute("filteredProducts", filteredProducts);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product.jsp");
-        dispatcher.forward(request, response);
+        request.setAttribute("productList", filteredProducts);
+        request.getRequestDispatcher("product.jsp").forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);

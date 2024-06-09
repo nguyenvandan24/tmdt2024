@@ -6,6 +6,7 @@ import model.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -168,41 +169,79 @@ public class Load {
         return list;
     }
 
-    public List<Product> getProductsByMultiplePriceRanges(List<String> priceRanges) {
-        List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM PRODUCTS WHERE";
+    public List<Product> getProductsByMultipleFilters(List<String> priceRanges, List<String> colors) {
+        List<Product> productList = new ArrayList<>();
+        StringBuilder query = new StringBuilder("SELECT * FROM products WHERE 1=1");
 
-        for (int i = 0; i < priceRanges.size(); i++) {
-            String[] prices = priceRanges.get(i).split("-");
-            int minPrice = Integer.parseInt(prices[0]);
-            int maxPrice = Integer.parseInt(prices[1]);
-            query += " (price >= " + minPrice + " AND price <= " + maxPrice + ")";
-            if (i < priceRanges.size() - 1) {
-                query += " OR";
+        if (!priceRanges.isEmpty() && !priceRanges.contains("all")) {
+            query.append(" AND (");
+            for (String range : priceRanges) {
+                String[] bounds = range.split("-");
+                query.append("(price BETWEEN ").append(bounds[0]).append(" AND ").append(bounds[1]).append(") OR ");
             }
+            query.setLength(query.length() - 4);  // Xóa từ cuối " OR "
+            query.append(")");
         }
 
-        try {
-            conn = new Conn().getconnecttion();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getDouble(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getInt(9),
-                        rs.getInt(10)
-                ));
+        if (!colors.isEmpty() && !colors.contains("all")) {
+            query.append(" AND color IN (");
+            for (String color : colors) {
+                query.append("'").append(color).append("',");
             }
-        } catch (Exception e) {
+            query.setLength(query.length() - 1);  // Xóa từ cuối dấu phẩy
+            query.append(")");
+        }
+
+        try {conn = new Conn().getconnecttion();
+             ps = conn.prepareStatement(query.toString());
+             rs = ps.executeQuery() ;
+
+            while (rs.next()) {
+                productList.add(new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getDouble(5), rs.getString(6), rs.getString(7), rs.getString(8),
+                        rs.getInt(9), rs.getInt(10)));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return list;
+        return productList;
     }
+//
+//    public List<Product> getProductsByMultiplePriceRanges(List<String> priceRanges) {
+//        List<Product> list = new ArrayList<>();
+//        String query = "SELECT * FROM PRODUCTS WHERE";
+//
+//        for (int i = 0; i < priceRanges.size(); i++) {
+//            String[] prices = priceRanges.get(i).split("-");
+//            int minPrice = Integer.parseInt(prices[0]);
+//            int maxPrice = Integer.parseInt(prices[1]);
+//            query += " (price >= " + minPrice + " AND price <= " + maxPrice + ")";
+//            if (i < priceRanges.size() - 1) {
+//                query += " OR";
+//            }
+//        }
+//
+//        try {
+//            conn = new Conn().getconnecttion();
+//            ps = conn.prepareStatement(query);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(new Product(
+//                        rs.getInt(1),
+//                        rs.getInt(2),
+//                        rs.getString(3),
+//                        rs.getString(4),
+//                        rs.getDouble(5),
+//                        rs.getString(6),
+//                        rs.getString(7),
+//                        rs.getString(8),
+//                        rs.getInt(9),
+//                        rs.getInt(10)
+//                ));
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
 }

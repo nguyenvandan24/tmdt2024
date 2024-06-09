@@ -53,10 +53,47 @@
     <div class="row px-xl-5">
         <!-- Shop Sidebar Start -->
         <div class="col-lg-3 col-md-12">
+<%--            <!-- Price Start -->--%>
+<%--            <div class="border-bottom mb-4 pb-4">--%>
+<%--                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>--%>
+<%--                <form id="priceFilterForm" action="filter" method="get">--%>
+<%--                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">--%>
+<%--                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-0-500000" name="price" value="0-500000"--%>
+<%--                               onchange="submitPriceFilter()" ${param.price == '0-500000' ? 'checked' : ''}>--%>
+<%--                        <label class="custom-control-label" for="price-0-500000">0 - 500,000</label>--%>
+<%--                    </div>--%>
+<%--                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">--%>
+<%--                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-500000-1000000" name="price" value="500000-1000000"--%>
+<%--                               onchange="submitPriceFilter()" ${param.price == '500000-1000000' ? 'checked' : ''}>--%>
+<%--                        <label class="custom-control-label" for="price-500000-1000000">500,000 - 1,000,000</label>--%>
+<%--                    </div>--%>
+<%--                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">--%>
+<%--                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1000000-1800000" name="price" value="1000000-1800000"--%>
+<%--                               onchange="submitPriceFilter()" ${param.price == '1000000-1800000' ? 'checked' : ''}>--%>
+<%--                        <label class="custom-control-label" for="price-1000000-1800000">1,000,000 - 1,800,000</label>--%>
+<%--                    </div>--%>
+<%--                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">--%>
+<%--                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1800000-2500000" name="price" value="1800000-2500000"--%>
+<%--                               onchange="submitPriceFilter()" ${param.price == '1800000-2500000' ? 'checked' : ''}>--%>
+<%--                        <label class="custom-control-label" for="price-1800000-2500000">1,800,000 - 2,500,000</label>--%>
+<%--                    </div>--%>
+<%--                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">--%>
+<%--                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-2500000-3500000" name="price" value="2500000-3500000"--%>
+<%--                               onchange="submitPriceFilter()" ${param.price == '2500000-3500000' ? 'checked' : ''}>--%>
+<%--                        <label class="custom-control-label" for="price-2500000-3500000">2,500,000 - 3,500,000</label>--%>
+<%--                    </div>--%>
+<%--                </form>--%>
+<%--            </div>--%>
+<%--            <!-- Price End -->--%>
             <!-- Price Start -->
             <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                <h5 class="font-weight-semi-bold mb-4">Lọc theo giá</h5>
                 <form id="priceFilterForm" action="filter" method="get">
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-all" name="price" value="all"
+                               onchange="submitPriceFilter()" ${param.price == 'all' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-all">Tất cả giá</label>
+                    </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input price-checkbox" id="price-0-500000" name="price" value="0-500000"
                                onchange="submitPriceFilter()" ${param.price == '0-500000' ? 'checked' : ''}>
@@ -68,56 +105,81 @@
                         <label class="custom-control-label" for="price-500000-1000000">500,000 - 1,000,000</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1000000-1800000" name="price" value="1000000-1800000"
-                               onchange="submitPriceFilter()" ${param.price == '1000000-1800000' ? 'checked' : ''}>
-                        <label class="custom-control-label" for="price-1000000-1800000">1,000,000 - 1,800,000</label>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1000000-1500000" name="price" value="1000000-1500000"
+                               onchange="submitPriceFilter()" ${param.price == '1000000-1500000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-1000000-1500000">1,000,000 - 1,500,000</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1800000-2500000" name="price" value="1800000-2500000"
-                               onchange="submitPriceFilter()" ${param.price == '1800000-2500000' ? 'checked' : ''}>
-                        <label class="custom-control-label" for="price-1800000-2500000">1,800,000 - 2,500,000</label>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-1500000-2000000" name="price" value="1500000-2000000"
+                               onchange="submitPriceFilter()" ${param.price == '1500000-2000000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-1500000-2000000">1,500,000 - 2,000,000</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-2500000-3500000" name="price" value="2500000-3500000"
-                               onchange="submitPriceFilter()" ${param.price == '2500000-3500000' ? 'checked' : ''}>
-                        <label class="custom-control-label" for="price-2500000-3500000">2,500,000 - 3,500,000</label>
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-2000000-2500000" name="price" value="2000000-2500000"
+                               onchange="submitPriceFilter()" ${param.price == '2000000-2500000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-2000000-2500000">2,000,000 - 2,500,000</label>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                        <input type="checkbox" class="custom-control-input price-checkbox" id="price-2500000-3000000" name="price" value="2500000-3000000"
+                               onchange="submitPriceFilter()" ${param.price == '2500000-3000000' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="price-2500000-3000000">2,500,000 - 3,000,000</label>
                     </div>
                 </form>
             </div>
             <!-- Price End -->
             <!-- Color Start -->
             <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
-                <form>
+                <h5 class="font-weight-semi-bold mb-4">Lọc theo màu</h5>
+                <form id="colorFilterForm" action="filter" method="get">
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="color-all">
-                        <label class="custom-control-label" for="price-all">All Color</label>
-                        <span class="badge border font-weight-normal">1000</span>
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-all" name="color" value="all"
+                               onchange="submitColorFilter()" ${param.color == 'all' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-all">Tất cả màu</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-1">
-                        <label class="custom-control-label" for="color-1">Black</label>
-                        <span class="badge border font-weight-normal">150</span>
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-red" name="color" value="Đen"
+                               onchange="submitColorFilter()" ${param.color == 'Đen' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-red">Đen</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-2">
-                        <label class="custom-control-label" for="color-2">White</label>
-                        <span class="badge border font-weight-normal">295</span>
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-blue" name="color" value="Nâu"
+                               onchange="submitColorFilter()" ${param.color == 'Nâu' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-blue">Nâu</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-3">
-                        <label class="custom-control-label" for="color-3">Red</label>
-                        <span class="badge border font-weight-normal">246</span>
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-green" name="color" value="Cà phê"
+                               onchange="submitColorFilter()" ${param.color == 'Cà phê' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-green">Cà phê</label>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-4">
-                        <label class="custom-control-label" for="color-4">Blue</label>
-                        <span class="badge border font-weight-normal">145</span>
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-yellow" name="color" value="Vàng nâu"
+                               onchange="submitColorFilter()" ${param.color == 'Vàng nâu' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-yellow">Vàng nâu</label>
                     </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="color-5">
-                        <label class="custom-control-label" for="color-5">Green</label>
-                        <span class="badge border font-weight-normal">168</span>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-bro-cow" name="color" value="Nâu da bò"
+                               onchange="submitColorFilter()" ${param.color == 'Nâu da bò' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-bro-cow">Nâu da bò</label>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-br" name="color" value="Nâu bò"
+                               onchange="submitColorFilter()" ${param.color == 'Nâu bò' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-br">Nâu bò</label>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-br-cow-" name="color" value="Màu bò nhạt"
+                               onchange="submitColorFilter()" ${param.color == 'Màu bò nhạt' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-br-cow-">Màu bò nhạt</label>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-br-cow-n" name="color" value="Màu bò đậm"
+                               onchange="submitColorFilter()" ${param.color == 'Màu bò đậm' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-br-cow-n">Màu bò đậm</label>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input type="checkbox" class="custom-control-input color-checkbox" id="color-br-y" name="color" value="Nâu vàng"
+                               onchange="submitColorFilter()" ${param.color == 'Nâu vàng' ? 'checked' : ''}>
+                        <label class="custom-control-label" for="color-br-y">Nâu vàng</label>
                     </div>
                 </form>
             </div>
@@ -275,9 +337,8 @@
                     </div>
                 </c:forEach>
 
-
-                <c:forEach var="product" items="${filteredProducts}">
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                <c:forEach var="product" items="${requestScope.productList}">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                 <img class="img-fluid w-100 size_image" src="${product.img}" alt="">
@@ -289,16 +350,39 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a href="detail.jsp?proID=${product.proID}" class="btn btn-sm text-dark p-0">
+                                <a href="DetailServlet?id=${product.proID}" class="btn btn-sm text-dark p-0">
                                     <i class="fas fa-eye text-primary mr-1"></i>View Detail
                                 </a>
-                                <a href="" class="btn btn-sm text-dark p-0">
+                                <a href="cart.jsp" class="btn btn-sm text-dark p-0">
                                     <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
                                 </a>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
+<%--                <c:forEach var="product" items="${filteredProducts}">--%>
+<%--                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">--%>
+<%--                        <div class="card product-item border-0 mb-4">--%>
+<%--                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">--%>
+<%--                                <img class="img-fluid w-100 size_image" src="${product.img}" alt="">--%>
+<%--                            </div>--%>
+<%--                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">--%>
+<%--                                <h6 class="text-truncate mb-3">${product.namePro}</h6>--%>
+<%--                                <div class="d-flex justify-content-center">--%>
+<%--                                    <h6 class="product-price">${product.price}</h6><h6 class="text-muted ml-2"></h6>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="card-footer d-flex justify-content-between bg-light border">--%>
+<%--                                <a href="detail.jsp?proID=${product.proID}" class="btn btn-sm text-dark p-0">--%>
+<%--                                    <i class="fas fa-eye text-primary mr-1"></i>View Detail--%>
+<%--                                </a>--%>
+<%--                                <a href="" class="btn btn-sm text-dark p-0">--%>
+<%--                                    <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart--%>
+<%--                                </a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </c:forEach>--%>
                 <div class="col-12 pb-1">
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center mb-3">
@@ -443,6 +527,7 @@
                         }
                     });
                 }
+                document.getElementById('colorFilterForm').submit();
             });
         });
     }
