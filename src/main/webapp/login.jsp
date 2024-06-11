@@ -28,23 +28,13 @@
   <!-- Customized Bootstrap Stylesheet -->
 <%--  <link href="css/style.css" rel="stylesheet">--%>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const loginForm = document.querySelector('#loginForm');
-      loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(loginForm);
-        fetch('login', {
-          method: 'POST',
-          body: formData
-        })
-                .then(response => response.json())
-                .then(data => {
-                  localStorage.setItem('user', JSON.stringify(data));
-                  window.location.href = data.roles == 0 ? '/admin/admin-index.jsp' : 'index.jsp';
-                })
-                .catch(error => console.error('Error:', error));
-      });
-    });
+    // Retrieve user ID and email from request attributes
+    var userId = '<%= request.getAttribute("userId") %>';
+    var userEmail = '<%= request.getAttribute("userEmail") %>';
+
+    // Store user ID and email in local storage
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('userEmail', userEmail);
   </script>
 </head>
 <style>

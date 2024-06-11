@@ -69,6 +69,12 @@
       <artifactId>bcprov-jdk15on</artifactId>
       <version>1.68</version> <!-- Kiểm tra phiên bản mới nhất tại https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
     </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.6</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>TMDT</finalName>
