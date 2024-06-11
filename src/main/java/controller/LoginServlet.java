@@ -42,6 +42,13 @@ public class LoginServlet extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("user", u);
+
+            // Set user ID and email to be sent to the client-side
+            String userId = String.valueOf(u.getId());
+            String userEmail = u.getEmail();
+            request.setAttribute("userId", userId);
+            request.setAttribute("userEmail", userEmail);
+
             // Forward to the response JSP page
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
