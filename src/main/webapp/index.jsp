@@ -117,10 +117,10 @@
                 <i class="fas fa-heart text-primary"></i>
                 <span class="badge">0</span>
             </a>
-            <a href="" class="btn border">
-                <i class="fas fa-shopping-cart text-primary"></i>
-                <span class="badge">0</span>
-            </a>
+            <a href="cart.jsp" class="btn border">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                    <c:out value="${sessionScope.itemCount != null ? sessionScope.itemCount : 0}"/>
+                        </a>
         </div>
     </div>
 </div>

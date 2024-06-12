@@ -83,11 +83,11 @@
       <h3 class="font-weight-semi-bold mb-4"><c:out value="${product.price}" />VND</h3>
       <p class="mb-4">${product.description}</p>
       <div class="d-flex mb-3">
-        <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:<c:out value="${product.size}" /></p>
+        <p class="text-dark font-weight-medium mb-0 mr-3">Kích cỡ:<c:out value="${product.size}" /></p>
 
       </div>
       <div class="d-flex mb-4">
-        <p class="text-dark font-weight-medium mb-0 mr-3">Colors: <c:out value="${product.color}" /></p>
+        <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc: <c:out value="${product.color}" /></p>
 
       </div>
       <div class="d-flex align-items-center mb-4 pt-2">
@@ -104,7 +104,13 @@
             </button>
           </div>
         </div>
-        <button class="btn btn-primary px-3"><a href="cart.jsp" class="btn btn-sm text-dark p-0"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</a></button>
+       <form action="cartServlet" method="post" class="m-0">
+                                                                                          <input type="hidden" name="productId" value="${product.proID}">
+                                                                                                   <input type="hidden" name="quantity" value="1"> <!-- Số lượng mặc định là 1 -->
+                                                                                                       <button type="submit" class="btn btn-sm text-dark p-0">
+                                                                                                               <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm giỏ hàng
+                                                                                                                      </button>
+                                                                                           </form>
       </div>
 
     </div>
@@ -112,8 +118,8 @@
   <div class="row px-xl-5">
     <div class="col">
       <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-        <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-        <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Reviews (0)</a>
+        <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
+        <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Đánh giá (0)</a>
       </div>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="tab-pane-1">
@@ -269,6 +275,39 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script>
+$(document).ready(function() {
+    $('.btn-minus, .btn-plus').click(function() {
+        var input = $(this).closest('.input-group').find('input[type="number"]');
+        var productId = input.data('product-id');
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            var newQuantity = $(this).hasClass('btn-minus') ? Math.max(currentVal - 1, 1) : currentVal + 1;
+            input.val(newQuantity);
+            updateQuantity(productId, newQuantity);
+        }
+    });
+
+    function updateQuantity(productId, newQuantity) {
+        $.ajax({
+            type: 'POST',
+            url: 'UpdateCartQuantityServlet',
+            data: {
+                productId: productId,
+                quantity: newQuantity
+            },
+            success: function(response) {
+                // Cập nhật dữ liệu trên trang
+                $('#totalProductCost').text(response.totalProductCost);
+                $('#totalAmount').text(response.totalAmount);
+                $('#total').text(response.productCost);
+            }
+        });
+    }
+});
+
+</script>
+
 </body>
 
 </html>

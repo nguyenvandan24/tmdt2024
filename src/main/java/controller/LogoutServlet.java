@@ -24,8 +24,13 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.invalidate(); // Invalidate the session
-        response.sendRedirect("login.jsp"); // Redirect to the login page
+
+        // Xóa thuộc tính user khỏi session
+        session.removeAttribute("user");
+
+        // Chuyển hướng đến trang đăng nhập
+        response.sendRedirect("login.jsp");
+
     }
 
     /**
