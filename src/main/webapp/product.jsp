@@ -275,11 +275,15 @@
                                      <!-- Chân sản phẩm -->
                                      <div class="card-footer d-flex justify-content-between bg-light border">
                                          <a href="DetailServlet?id=${product.proID}" class="btn btn-sm text-dark p-0">
-                                             <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                             <i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết
                                          </a>
-                                         <a href="cart.jsp" class="btn btn-sm text-dark p-0">
-                                             <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                                         </a>
+ <form action="cartServlet" method="post" class="m-0">
+                     <input type="hidden" name="productId" value="${product.proID}">
+                              <input type="hidden" name="quantity" value="1"> <!-- Số lượng mặc định là 1 -->
+                                  <button type="submit" class="btn btn-sm text-dark p-0">
+                                          <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm giỏ hàng
+                                                 </button>
+                      </form>
                                      </div>
                                  </div>
                              </div>
@@ -300,11 +304,15 @@
                                                               </div>
                                                               <div class="card-footer d-flex justify-content-between bg-light border">
                                                                   <a href="DetailServlet?id=${product.proID}" class="btn btn-sm text-dark p-0">
-                                                                      <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                                                      <i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết
                                                                   </a>
-                                                                  <a href="cart.jsp" class="btn btn-sm text-dark p-0">
-                                                                      <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                                                                  </a>
+                                                               <form action="cartServlet" method="post" class="m-0">
+                                                                                   <input type="hidden" name="productId" value="${product.proID}">
+                                                                                            <input type="hidden" name="quantity" value="1"> <!-- Số lượng mặc định là 1 -->
+                                                                                                <button type="submit" class="btn btn-sm text-dark p-0">
+                                                                                                        <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm giỏ hàng
+                                                                                                               </button>
+                                                                                    </form>
                                                               </div>
                                                           </div>
                                                       </div>
