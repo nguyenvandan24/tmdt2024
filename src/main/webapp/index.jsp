@@ -1,3 +1,4 @@
+<%@ page import="model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
@@ -36,7 +37,8 @@
                 logoutButton.addEventListener('click', function(event) {
                     event.preventDefault();
                     // Remove user data from localStorage
-                    localStorage.removeItem('user');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('userEmail');
                     fetch('logout')
                         .then(response => {
                             if (response.ok) {
@@ -49,6 +51,7 @@
                 });
             }
         });
+
     </script>
 </head>
 
@@ -776,14 +779,17 @@
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 <script>
-    // Retrieve user ID and email from request attributes
-    var userId = '<%= request.getAttribute("userId") %>';
-    var userEmail = '<%= request.getAttribute("userEmail") %>';
+    // Retrieve user ID and email from session attributes
+    var userId = '<%= session.getAttribute("user") != null ? ((User)session.getAttribute("user")).getId() : "" %>';
+    var userEmail = '<%= session.getAttribute("user") != null ? ((User)session.getAttribute("user")).getEmail() : "" %>';
 
-    // Store user ID and email in local storage
-    localStorage.setItem('userId', userId);
-    localStorage.setItem('userEmail', userEmail);
+    // Store user ID and email in local storage if they are available
+    if (userId && userEmail) {
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userEmail', userEmail);
+    }
 </script>
+
 </body>
 
 </html>

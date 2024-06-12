@@ -27,6 +27,7 @@
 
   <!-- Customized Bootstrap Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -293,15 +294,6 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
-<script>
-  // Retrieve user ID and email from request attributes
-  var userId = '<%= request.getAttribute("userId") %>';
-  var userEmail = '<%= request.getAttribute("userEmail") %>';
-
-  // Store user ID and email in local storage
-  localStorage.setItem('userId', userId);
-  localStorage.setItem('userEmail', userEmail);
-</script>
 </body>
 
 </html>
