@@ -37,7 +37,8 @@
                 logoutButton.addEventListener('click', function(event) {
                     event.preventDefault();
                     // Remove user data from localStorage
-                    localStorage.removeItem('user');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('userEmail');
                     fetch('logout')
                         .then(response => {
                             if (response.ok) {
@@ -50,6 +51,7 @@
                 });
             }
         });
+
     </script>
 </head>
 
