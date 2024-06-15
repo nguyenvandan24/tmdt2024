@@ -135,7 +135,7 @@
                         <h5 class="font-weight-bold" id="totalAmount"><%= cart.getTotalCost() + 10000 %></h5>
                     </div>
                     <!-- Thêm form để thực hiện thanh toán -->
-                    <form action="payment.jsp" method="post">
+                    <form action="address" method="post">
                         <input type="hidden" name="totalCost" value="<%= cart.getTotalCost() + 10000 %>">
                         <button type="submit" class="btn btn-block btn-primary my-3 py-3">Thanh toán</button>
                     </form>
@@ -183,6 +183,7 @@
             <a class="text-dark mb-2" href="product.jsp"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
             <a class="text-dark mb-2" href="detail.jsp"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
             <a class="text-dark mb-2" href="cart.jsp"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+              <a class="text-dark mb-2" href="myorders.jsp"><i class="fa fa-angle-right mr-2"></i>My Order</a>
             <a class="text-dark mb-2" href="checkout.jsp"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
             <a class="text-dark" href="contact.jsp"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
           </div>
@@ -194,6 +195,7 @@
             <a class="text-dark mb-2" href="product.jsp"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
             <a class="text-dark mb-2" href="detail.jsp"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
             <a class="text-dark mb-2" href="cart.jsp"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+              <a class="text-dark mb-2" href="myorders.jsp"><i class="fa fa-angle-right mr-2"></i>My Order</a>
             <a class="text-dark mb-2" href="checkout.jsp"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
             <a class="text-dark" href="contact.jsp"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
           </div>
