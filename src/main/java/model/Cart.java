@@ -29,6 +29,10 @@ public class Cart {
         }
     }
 
+    public void clear() {
+        items.clear(); // Xóa tất cả các mục trong giỏ hàng
+        totalCost = 0.0; // Đặt lại tổng chi phí về 0
+    }
 
     public Map<String, CartItem> getItems() {
         return items;
