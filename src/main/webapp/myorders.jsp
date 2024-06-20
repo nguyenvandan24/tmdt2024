@@ -31,17 +31,45 @@
 <body>
 <%@include file="header.jsp" %>
 
-<%--<div class="container mt-5">--%>
-<%--    <h2>Thông tin đơn hàng</h2>--%>
-<%--    <div class="row">--%>
-<%--        <div class="col-md-6">--%>
-<%--            <p><strong>ID Đơn hàng:</strong> ${order.id}</p>--%>
-<%--            <p><strong>Thời gian tạo:</strong> <fmt:formatDate value="${order.orderTime}" pattern="dd/MM/yyyy HH:mm:ss"/></p>--%>
-<%--            <p><strong>Tổng tiền:</strong> ${order.totalCost}</p>--%>
-<%--            <p><strong>Trạng thái:</strong> ${order.status}</p>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
+<%
+    String orderSuccessMessage = (String) session.getAttribute("orderSuccess");
+    if (orderSuccessMessage != null) {
+%>
+<div class="alert alert-success">
+    <%= orderSuccessMessage %>
+</div>
+<%
+        session.removeAttribute("orderSuccess"); // Remove message after displaying it once
+    }
+%>
+
+<div class="container mt-5">
+    <h2>Thông tin đơn hàng</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>ID Đơn hàng</th>
+                    <td>${order.id}</td>
+                </tr>
+                <tr>
+                    <th>Thời gian tạo</th>
+                    <td><fmt:formatDate value="${order.orderTime}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                </tr>
+                <tr>
+                    <th>Tổng tiền</th>
+                    <td>${order.totalCost}</td>
+                </tr>
+                <tr>
+                    <th>Trạng thái</th>
+                    <td>${order.status}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!-- Footer Start -->
 <div class="container-fluid bg-secondary text-dark mt-5 pt-5">

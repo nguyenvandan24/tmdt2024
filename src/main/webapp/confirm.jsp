@@ -37,17 +37,31 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        .address-section {
-            background-color: #e9ecef; /* Slightly darker background for address */
+        .address-section, .payment-section {
+            background-color: #f8f9fa;
             padding: 20px;
             border-radius: 5px;
+            margin-bottom: 20px;
         }
-        .payment-section {
-            background-color: #dee2e6; /* Even darker background for payment */
+        .order-summary {
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
+        .table thead th {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
     </style>
 
 </head>
@@ -72,116 +86,104 @@
         <!-- Payment Section -->
         <div class="col-md-6 payment-section">
             <h2>Phương thức thanh toán</h2>
-            <form action="payment" method="post">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash" checked>
-                    <label class="form-check-label" for="cash">
-                        Thanh toán bằng tiền mặt khi nhận hàng
+            <form id="orderForm" action="complete" method="post">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="paymentMethod" id="cash" value="cash" autocomplete="off"> Thanh toán bằng tiền mặt khi nhận hàng
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="paymentMethod" id="bank" value="bank" autocomplete="off"> Thanh toán bằng chuyển khoản ngân hàng
                     </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="bank" value="bank">
-                    <label class="form-check-label" for="bank">
-                        Thanh toán bằng chuyển khoản ngân hàng
-                    </label>
+
+                <!-- Order Summary Section -->
+                <div class="order-summary mt-4">
+                    <h3 class="text-center">Thông tin đơn hàng</h3>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered">
+                            <thead class="bg-secondary text-dark">
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                            </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                            <%
+                                // Lấy thông tin người dùng từ session
+                                User user = (User) session.getAttribute("user");
+                                // Kiểm tra người dùng và giỏ hàng của họ
+                                if (user != null) {
+                                    Cart cart = (Cart) session.getAttribute("cart_" + user.getId());
+                                    if (cart != null && !cart.getItems().isEmpty()) {
+                                        for (Map.Entry<String, CartItem> entry : cart.getItems().entrySet()) {
+                                            CartItem cartItem = entry.getValue();
+                                            Product product = cartItem.getProduct();
+                                            int quantity = cartItem.getQuantity();
+                            %>
+                            <tr>
+                                <td class="align-middle">
+                                    <img src="<%= product.getImg() %>" alt="<%= product.getNamePro() %>" style="width: 50px;">
+                                    <%= product.getNamePro() %>
+                                </td>
+                                <td class="align-middle price" data-price="<%= product.getPrice() %>"><%= product.getPrice() %></td>
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary btn-minus" type="button">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="hidden" name="productId" value="<%= product.getProID() %>">
+                                        <input type="number" class="form-control form-control-sm bg-secondary text-center" value="<%= quantity %>" data-product-id="<%= product.getProID() %>">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary btn-plus" type="button">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle"><span class="total-price" id="total_<%= product.getProID() %>"><%= product.getPrice() * quantity %></span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Order Summary Card -->
+                    <div class="card border-secondary mb-5">
+                        <div class="card-header bg-secondary text-white">
+                            <h4 class="font-weight-semi-bold m-0">Thanh toán</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Tiền sản phẩm</h6>
+                                <h6 class="font-weight-medium" id="totalProductCost"><%= cart.getTotalCost() %></h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Phí ship</h6>
+                                <h6 class="font-weight-medium">10000</h6>
+                            </div>
+                        </div>
+                        <div class="card-footer border-secondary bg-transparent">
+                            <div class="d-flex justify-content-between mt-2">
+                                <h5 class="font-weight-bold">Tổng</h5>
+                                <h5 class="font-weight-bold" id="totalAmount"><%= cart.getTotalCost() + 10000 %></h5>
+                            </div>
+                            <!-- Complete Payment Form -->
+                            <input type="hidden" name="totalCost" value="<%= cart.getTotalCost() + 10000 %>">
+                            <button type="submit" class="btn btn-block btn-primary my-3 py-3">Hoàn tất thanh toán</button>
+                        </div>
+                    </div>
+                    <%
+                                }
+                            }
+                        }
+                    %>
                 </div>
             </form>
         </div>
-    </div>
-</div>
-
-<!-- Order Summary Section -->
-<div class="container-fluid pt-5">
-    <div class="row px-xl-5">
-        <div class="col-lg-8">
-            <div class="table-responsive mb-5">
-                <table class="table table-bordered">
-                    <thead class="bg-secondary text-dark">
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Giá</th>
-                        <th>Số lượng</th>
-                        <th>Tổng cộng</th>
-                        <th>Hành động</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%
-                        // Lấy thông tin người dùng từ session
-                        User user = (User) session.getAttribute("user");
-                        // Kiểm tra người dùng và giỏ hàng của họ
-                        if (user != null) {
-                            Cart cart = (Cart) session.getAttribute("cart_" + user.getId());
-                            if (cart != null && !cart.getItems().isEmpty()) {
-                                for (Map.Entry<String, CartItem> entry : cart.getItems().entrySet()) {
-                                    CartItem cartItem = entry.getValue();
-                                    Product product = cartItem.getProduct();
-                                    int quantity = cartItem.getQuantity();
-                    %>
-                    <tr>
-                        <td class="align-middle">
-                            <img src="<%= product.getImg() %>" alt="<%= product.getNamePro() %>" style="width: 50px;">
-                            <%= product.getNamePro() %>
-                        </td>
-                        <td class="align-middle price" data-price="<%= product.getPrice() %>"><%= product.getPrice() %></td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" type="button">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="hidden" name="productId" value="<%= product.getProID() %>">
-                                <input type="number" class="form-control form-control-sm bg-secondary text-center" value="<%= quantity %>" data-product-id="<%= product.getProID() %>">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus" type="button">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle"><span class="total-price" id="total_<%= product.getProID() %>"><%= product.getPrice() * quantity %></span></td>
-                    </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Order Summary Card -->
-        <div class="col-lg-4">
-            <div class="card border-secondary mb-5">
-                <div class="card-header bg-secondary text-white">
-                    <h4 class="font-weight-semi-bold m-0">Thanh toán</h4>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3 pt-1">
-                        <h6 class="font-weight-medium">Tiền sản phẩm</h6>
-                        <h6 class="font-weight-medium" id="totalProductCost"><%= cart.getTotalCost() %></h6>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Phí ship</h6>
-                        <h6 class="font-weight-medium">10000</h6>
-                    </div>
-                </div>
-                <div class="card-footer border-secondary bg-transparent">
-                    <div class="d-flex justify-content-between mt-2">
-                        <h5 class="font-weight-bold">Tổng</h5>
-                        <h5 class="font-weight-bold" id="totalAmount"><%= cart.getTotalCost() + 10000 %></h5>
-                    </div>
-                    <!-- Complete Payment Form -->
-                    <form action="complete" method="post">
-                        <input type="hidden" name="totalCost" value="<%= cart.getTotalCost() + 10000 %>">
-                        <button type="submit" class="btn btn-block btn-primary my-3 py-3">Hoàn tất thanh toán</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <%
-                    }
-                }
-            }
-        %>
     </div>
 </div>
 
@@ -272,6 +274,17 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+
+<script>
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+        var selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+
+        if (!selectedPaymentMethod) {
+            alert('Vui lòng chọn phương thức thanh toán');
+            event.preventDefault(); // Prevent form submission if no payment method is selected
+        }
+    });
+</script>
 
 </body>
 </html>
