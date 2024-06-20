@@ -4,13 +4,14 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Order {
+    private int userID;
     private int id; // ID của đơn hàng
     private Timestamp orderTime; // Thời gian tạo đơn hàng
     private String phone;
-    private String address;
     private String province;
     private String district;
     private String ward;
+    private String address;
     private String paymentMethod;
     private double totalCost;
     private List<OrderItem> orderItems;
@@ -22,6 +23,15 @@ public class Order {
     }
 
     // Getter and Setter methods
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     public int getId() {
         return id;
     }
