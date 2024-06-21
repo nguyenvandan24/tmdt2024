@@ -1,153 +1,75 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>EShopper - Bootstrap Shop Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <title>Đơn hàng của tôi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Free HTML Templates">
+    <meta name="description" content="Free HTML Templates">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" href="img/favicon.ico">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="lib/owlcarousel/assets/owl.carousel.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: white;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container-register {
-        width: 40%;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-        text-align: center;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    label {
-        font-size: large;
-        display: block;
-        margin-bottom: 5px;
-        color: black;
-    }
-
-    input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #D19C97;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #e4606d;
-    }
-
-    .error {
-        color: red; /* Set the error message color to red */
-        font-size: small;
-        margin-top: 5px;
-    }
-
-</style>
-
 <body>
-<c:import url="header.jsp" />
-<!-- Page Header Start -->
-<div class="container-fluid bg-secondary mb-5">
-    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">Register</h1>
-        <div class="d-inline-flex">
-            <p class="m-0"><a href="index.jsp">Home</a></p>
-            <p class="m-0 px-2">-</p>
-            <p class="m-0">Register</p>
+<%@include file="header.jsp" %>
+
+<%
+    String orderSuccessMessage = (String) session.getAttribute("orderSuccess");
+    if (orderSuccessMessage != null) {
+%>
+<div class="alert alert-success">
+    <%= orderSuccessMessage %>
+</div>
+<%
+        session.removeAttribute("orderSuccess"); // Remove message after displaying it once
+    }
+%>
+
+<div class="container mt-5">
+    <h2>Thông tin đơn hàng</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>ID Đơn hàng</th>
+                    <td>${order.id}</td>
+                </tr>
+                <tr>
+                    <th>Thời gian tạo</th>
+                    <td><fmt:formatDate value="${order.orderTime}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                </tr>
+                <tr>
+                    <th>Tổng tiền</th>
+                    <td>${order.totalCost}</td>
+                </tr>
+                <tr>
+                    <th>Trạng thái</th>
+                    <td>${order.status}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-<!-- Page Header End -->
-
-<div class="container-register">
-    <h2>Registration Form</h2>
-    <form id="registerForm" action="register" method="POST">
-        <p class="text-danger">${errorMessage}</p>
-        <div class="form-group">
-            <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name." required>
-            <span id="fullnameError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username." required>
-            <span id="usernameError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email." required>
-            <span id="emailError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-            <span id="phoneError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" name="address" placeholder="Enter your address." required>
-            <span id="addressError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password." required>
-            <span id="passwordError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="repassword">Confirm Password</label>
-            <input type="password" id="repassword" name="repassword" placeholder="Enter your password again." required>
-            <span id="repasswordError" class="error"></span>
-        </div>
-        <button type="submit">Register</button>
-    </form>
-</div>
-
 
 <!-- Footer Start -->
 <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
@@ -221,10 +143,8 @@
 </div>
 <!-- Footer End -->
 
-
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -238,7 +158,6 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
-<script src="js/register.js"></script>
-</body>
 
+</body>
 </html>

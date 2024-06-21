@@ -1,157 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page isELIgnored="false"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>EShopper - Bootstrap Shop Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <title>Địa chỉ giao hàng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Free HTML Templates">
+    <meta name="description" content="Free HTML Templates">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" href="img/favicon.ico">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/owlcarousel/assets/owl.carousel.min.css">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: white;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container-register {
-        width: 40%;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-        text-align: center;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    label {
-        font-size: large;
-        display: block;
-        margin-bottom: 5px;
-        color: black;
-    }
-
-    input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #D19C97;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #e4606d;
-    }
-
-    .error {
-        color: red; /* Set the error message color to red */
-        font-size: small;
-        margin-top: 5px;
-    }
-
-</style>
 
 <body>
-<c:import url="header.jsp" />
-<!-- Page Header Start -->
-<div class="container-fluid bg-secondary mb-5">
-    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">Register</h1>
-        <div class="d-inline-flex">
-            <p class="m-0"><a href="index.jsp">Home</a></p>
-            <p class="m-0 px-2">-</p>
-            <p class="m-0">Register</p>
+<%@include file="header.jsp" %>
+
+<div class="container-fluid pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Địa chỉ giao hàng</h3></div>
+                <div class="card-body">
+                    <form action="confirm" method="post">
+                        <div class="form-group">
+                            <label for="province">Số điện thoại:</label>
+                            <textarea id="phone" name="phone" rows="1" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="province">Tỉnh/Thành phố:</label>
+                            <textarea id="province" name="province" rows="1" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="district">Quận/Huyện:</label>
+                            <textarea id="district" name="district" rows="1" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ward">Phường/Xã:</label>
+                            <textarea id="ward" name="ward" rows="1" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa chỉ cụ thể:</label>
+                            <textarea id="address" name="address" rows="2" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                            <button type="submit" class="btn btn-primary">Tiếp tục</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<!-- Page Header End -->
 
-<div class="container-register">
-    <h2>Registration Form</h2>
-    <form id="registerForm" action="register" method="POST">
-        <p class="text-danger">${errorMessage}</p>
-        <div class="form-group">
-            <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name." required>
-            <span id="fullnameError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username." required>
-            <span id="usernameError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email." required>
-            <span id="emailError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-            <span id="phoneError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" name="address" placeholder="Enter your address." required>
-            <span id="addressError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password." required>
-            <span id="passwordError" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label for="repassword">Confirm Password</label>
-            <input type="password" id="repassword" name="repassword" placeholder="Enter your password again." required>
-            <span id="repasswordError" class="error"></span>
-        </div>
-        <button type="submit">Register</button>
-    </form>
-</div>
-
-
-<!-- Footer Start -->
-<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-    <div class="row px-xl-5 pt-5">
+<!-- Footer -->
+<div class="container-fluid bg-secondary text-dark mt-5">
+    <div class="row px-xl-5 py-5">
         <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
             <a href="" class="text-decoration-none">
                 <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
@@ -191,11 +110,10 @@
                     <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
                     <form action="">
                         <div class="form-group">
-                            <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required="required" />
+                            <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
-                                   required="required" />
+                            <input type="email" class="form-control border-0 py-4" placeholder="Your Email" required>
                         </div>
                         <div>
                             <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
@@ -221,10 +139,8 @@
 </div>
 <!-- Footer End -->
 
-
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -238,7 +154,7 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
-<script src="js/register.js"></script>
-</body>
 
+</body>
 </html>
+``
