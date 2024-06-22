@@ -49,8 +49,12 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("userId", userId);
             request.setAttribute("userEmail", userEmail);
 
-            // Forward to the response JSP page
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            // Check the user's role and redirect accordingly
+            if (u.getRoles() == 0) {
+                response.sendRedirect(request.getContextPath() + "/admin/admin-index.jsp");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            }
         }
     }
 

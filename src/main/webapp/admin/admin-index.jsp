@@ -1,3 +1,4 @@
+<%@ page import="model.User" %>
 <!doctype html>
 <html lang="en">
 
@@ -7,6 +8,31 @@
     <title>Modernize Free</title>
     <link rel="shortcut icon" type="image/png" href="../admin/assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../admin/assets/css/styles.min.css" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutButton = document.getElementById('logout');
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    // Remove user data from localStorage
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('userEmail');
+                    fetch('logout')
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.href = 'login.jsp';
+                            } else {
+                                console.error('Logout failed.');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            }
+        });
+
+    </script>
 </head>
 
 <body>
@@ -18,7 +44,7 @@
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="./index.html" class="text-nowrap logo-img">
+                <a href="/" class="text-nowrap logo-img">
                     <img src="../admin/assets/images/logos/dark-logo.svg" width="180" alt="" />
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -45,11 +71,11 @@
                         <span class="hide-menu">UI COMPONENTS</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                        <a class="sidebar-link" href="/showUsersAdmin" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                            <span class="hide-menu">Buttons</span>
+                            <span class="hide-menu">Users</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -89,11 +115,11 @@
                         <span class="hide-menu">AUTH</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                        <a class="sidebar-link" id="logout" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
-                            <span class="hide-menu">Login</span>
+                            <span class="hide-menu">Logout</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
