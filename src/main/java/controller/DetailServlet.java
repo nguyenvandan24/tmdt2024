@@ -2,14 +2,11 @@ package controller;
 
 import dao.Load;
 import model.Product;
-import model.Review;
-import service.ReviewService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/DetailServlet")
 public class DetailServlet extends HttpServlet {
@@ -22,6 +19,7 @@ public class DetailServlet extends HttpServlet {
         String productId = request.getParameter("id");
         System.out.println("Product ID: " + productId);
 
+
         // Kiểm tra xem productId có giá trị không
         if (productId != null && !productId.isEmpty()) {
             // Lấy thông tin chi tiết của sản phẩm từ cơ sở dữ liệu bằng phương thức trong DAO
@@ -32,13 +30,6 @@ public class DetailServlet extends HttpServlet {
             if (product != null) {
                 // Đặt thông tin chi tiết sản phẩm vào request attribute
                 request.setAttribute("product", product);
-
-                // Load all reviews for the product using ReviewService
-                ReviewService reviewService = new ReviewService();
-                List<Review> reviews = reviewService.getAllReviewsByProductId(Integer.parseInt(productId));
-
-                // Đặt danh sách đánh giá vào request attribute
-                request.setAttribute("reviews", reviews);
 
                 // Chuyển hướng (forward) sang trang JSP chi tiết sản phẩm
                 request.getRequestDispatcher("detail.jsp").forward(request, response);
@@ -51,7 +42,6 @@ public class DetailServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

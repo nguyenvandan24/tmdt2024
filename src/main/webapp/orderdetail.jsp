@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="dao.OrderDAO" %>
-<%@page import="model.Order" %>
-<%@page import="model.User" %>
-<%@page import="java.util.List" %>
+<%@ page import="dao.OrderDAO" %>
+<%@ page import="model.Order" %>
+<%@ page import="model.OrderDetail" %>
+<%@ page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Đơn hàng của tôi</title>
+    <title>Chi tiết đơn hàng</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="Free HTML Templates">
     <meta name="description" content="Free HTML Templates">
@@ -35,54 +36,74 @@
 </head>
 
 <body>
-<%@include file="header.jsp" %>
+<%@ include file="header.jsp" %>
 
 <div class="container mt-5">
-    <h2>Đơn hàng của tôi</h2>
+    <%--    <h2>Chi tiết đơn hàng</h2>--%>
     <%
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            response.sendRedirect("login.jsp");
+        String orderIdStr = request.getParameter("orderId");
+        if (orderIdStr == null) {
+            response.sendRedirect("myorders.jsp");
             return;
         }
 
+        int orderId = Integer.parseInt(orderIdStr);
         OrderDAO orderDAO = new OrderDAO();
-        List<Order> orders = orderDAO.getOrdersByUserId(user.getId());
+        Order order = orderDAO.getOrderById(orderId);
+        if (order == null) {
+            response.sendRedirect("myorders.jsp");
+            return;
+        }
+
+        List<OrderDetail> orderDetails = orderDAO.getOrderDetailsByOrderId(orderId);
     %>
 
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>ID Đơn hàng</th>
-                    <th>Thời gian tạo</th>
-                    <th>Tổng tiền</th>
-                    <th>Phương thức thanh toán</th>
-                    <th>Trạng thái</th>
-                    <th>Chi tiết</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% if (orders != null && !orders.isEmpty()) {
-                    for (Order order : orders) { %>
-                <tr>
-                    <td><%= order.getId() %></td>
-                    <td><fmt:formatDate value="<%= order.getOrderTime() %>" pattern="dd/MM/yyyy HH:mm:ss"/></td>
-                    <td><%= order.getTotalCost() %></td>
-                    <td><%= order.getPaymentMethod() %></td>
-                    <td><%= order.getStatus() %></td>
-                    <td><a href="orderdetail.jsp?orderId=<%= order.getId() %>">Xem chi tiết</a></td>
-                </tr>
-                <% }
-                } else { %>
-                <tr>
-                    <td colspan="5" class="text-center">Bạn chưa có đơn hàng nào.</td>
-                </tr>
-                <% } %>
-                </tbody>
-            </table>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Thông tin đơn hàng</h5>
+            <p>Mã đơn hàng: <%= order.getId() %></p>
+            <p>Ngày đặt hàng: <fmt:formatDate value="<%= order.getOrderTime() %>" pattern="dd/MM/yyyy HH:mm:ss"/></p>
+            <p>Tổng tiền: <%= order.getTotalCost() %> VND</p>
+            <p>Phương thức thanh toán: <%= order.getPaymentMethod() %></p>
+            <p>Trạng thái đơn hàng: <%= order.getStatus() %></p>
         </div>
+    </div>
+
+    <div class="mt-4">
+        <h5>Chi tiết đơn hàng</h5>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Thành tiền</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% int stt = 1;
+                double total = 0;
+                for (OrderDetail detail : orderDetails) {
+                    double amount = detail.getPrice() * detail.getQuantity();
+                    total += amount;
+            %>
+            <tr>
+                <th scope="row"><%= stt++ %></th>
+                <td><%= new String(((String) detail.getNamePro()).getBytes("ISO-8859-1"), "UTF-8") %></td>
+                <td><%= detail.getPrice() %> VND</td>
+                <td><%= detail.getQuantity() %></td>
+                <td><%= amount %> VND</td>
+            </tr>
+            <% } %>
+            </tbody>
+            <tfoot>
+<%--            <tr>--%>
+<%--                <th colspan="4">Tổng cộng</th>--%>
+<%--                <th><%= total %> VND</th>--%>
+<%--            </tr>--%>
+            </tfoot>
+        </table>
     </div>
 </div>
 

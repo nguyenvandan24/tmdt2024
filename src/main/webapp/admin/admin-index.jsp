@@ -1,17 +1,3 @@
-<%@ page import="model.User" %>
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page isELIgnored="false"%>
-<%--<%--%>
-<%--    // Check if the user has the admin role--%>
-<%--    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");--%>
-<%--    if (isAdmin == null || !isAdmin) {--%>
-<%--        // Redirect to an error page or the login page--%>
-<%--        response.sendRedirect("404.jsp"); // Change this to the actual error page or login page--%>
-<%--        return; // Ensure to stop further execution of the JSP--%>
-<%--    }--%>
-<%--%>--%>
 <!doctype html>
 <html lang="en">
 
@@ -21,31 +7,6 @@
     <title>Modernize Free</title>
     <link rel="shortcut icon" type="image/png" href="../admin/assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../admin/assets/css/styles.min.css" />
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const logoutButton = document.getElementById('logout');
-
-            if (logoutButton) {
-                logoutButton.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    // Remove user data from localStorage
-                    localStorage.removeItem('userId');
-                    localStorage.removeItem('userEmail');
-                    fetch('logout')
-                        .then(response => {
-                            if (response.ok) {
-                                window.location.href = 'login.jsp';
-                            } else {
-                                console.error('Logout failed.');
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                });
-            }
-        });
-
-    </script>
 </head>
 
 <body>
@@ -57,7 +18,7 @@
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="/" class="text-nowrap logo-img">
+                <a href="./index.html" class="text-nowrap logo-img">
                     <img src="../admin/assets/images/logos/dark-logo.svg" width="180" alt="" />
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -84,11 +45,11 @@
                         <span class="hide-menu">UI COMPONENTS</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/showUsersAdmin" aria-expanded="false">
+                        <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                            <span class="hide-menu">Users</span>
+                            <span class="hide-menu">Buttons</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -128,11 +89,11 @@
                         <span class="hide-menu">AUTH</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" id="logout" aria-expanded="false">
+                        <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
-                            <span class="hide-menu">Logout</span>
+                            <span class="hide-menu">Login</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

@@ -126,8 +126,11 @@
                                 <td class="align-middle">
                                     <img src="<%= product.getImg() %>" alt="<%= product.getNamePro() %>" style="width: 50px;">
                                     <%= product.getNamePro() %>
+                                    <input type="hidden" name="productImg" value="<%= product.getImg() %>">
+                                    <input type="hidden" name="productName" value="<%= product.getNamePro() %>">
                                 </td>
                                 <td class="align-middle price" data-price="<%= product.getPrice() %>"><%= product.getPrice() %></td>
+                                <input type="hidden" name="productPrice" value="<%= product.getPrice() %>">
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
@@ -136,7 +139,7 @@
                                             </button>
                                         </div>
                                         <input type="hidden" name="productId" value="<%= product.getProID() %>">
-                                        <input type="number" class="form-control form-control-sm bg-secondary text-center" value="<%= quantity %>" data-product-id="<%= product.getProID() %>">
+                                        <input type="number" name="productQuantity" class="form-control form-control-sm bg-secondary text-center" value="<%= quantity %>" data-product-id="<%= product.getProID() %>">
                                         <div class="input-group-btn">
                                             <button class="btn btn-sm btn-primary btn-plus" type="button">
                                                 <i class="fa fa-plus"></i>

@@ -1,17 +1,14 @@
-<%@ page import="model.Review" %>
-<%@ page import="java.util.List" %>
-<%@ page import="service.ReviewService" %>
-<%@ page import="model.Product" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 
 
 <%@page isELIgnored="false"%>
 <!DOCTYPE html>
-<html lang="Vi">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>EShopper - Bootstrap Shop Template</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="Free HTML Templates" name="keywords">
@@ -108,12 +105,12 @@
           </div>
         </div>
        <form action="cartServlet" method="post" class="m-0">
-      <input type="hidden" name="productId" value="${product.proID}">
-               <input type="hidden" name="quantity" value="1"> <!-- Số lượng mặc định là 1 -->
-                   <button type="submit" class="btn btn-sm text-dark p-0">
-                           <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm giỏ hàng
-                                  </button>
-       </form>
+                                                                                          <input type="hidden" name="productId" value="${product.proID}">
+                                                                                                   <input type="hidden" name="quantity" value="1"> <!-- Số lượng mặc định là 1 -->
+                                                                                                       <button type="submit" class="btn btn-sm text-dark p-0">
+                                                                                                               <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm giỏ hàng
+                                                                                                                      </button>
+                                                                                           </form>
       </div>
 
     </div>
@@ -130,69 +127,58 @@
           <p><c:out value="${product.description}" /></p>
         </div>
 
-
         <div class="tab-pane fade" id="tab-pane-2">
           <div class="row">
             <div class="col-md-6">
-              <h4 class="mb-4">Đánh giá</h4>
-              <c:forEach var="review" items="${reviews}">
-                <div class="media mb-4">
-                  <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                  <div class="media-body">
-                    <h6>${review.name}<small> - <i>${review.email}</i></small></h6>
-                    <div class="text-primary mb-2">
-                      <c:forEach var="i" begin="1" end="${review.star}">
-                        <i class="fas fa-star"></i>
-                      </c:forEach>
-                      <c:forEach var="i" begin="${review.star + 1}" end="5">
-                        <i class="far fa-star"></i>
-                      </c:forEach>
-                    </div>
-                    <p>${review.content}</p>
+              <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
+              <div class="media mb-4">
+                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                <div class="media-body">
+                  <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+                  <div class="text-primary mb-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
                   </div>
+                  <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
                 </div>
-              </c:forEach>
+              </div>
             </div>
-
             <div class="col-md-6">
-              <h4 class="mb-4">Để lại đánh giá</h4>
-              <small>Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu *</small>
-              <form action="ReviewServlet" method="post">
-                <div class="d-flex my-3">
-                  <p class="mb-0 mr-2">Đánh giá của bạn * :</p>
-                  <div class="text-primary">
-                    <input type="hidden" id="star" name="star" value="0">
-                    <i class="far fa-star" onclick="changeStar(1)" id="star1" style="cursor: pointer;"></i>
-                    <i class="far fa-star" onclick="changeStar(2)" id="star2" style="cursor: pointer;"></i>
-                    <i class="far fa-star" onclick="changeStar(3)" id="star3" style="cursor: pointer;"></i>
-                    <i class="far fa-star" onclick="changeStar(4)" id="star4" style="cursor: pointer;"></i>
-                    <i class="far fa-star" onclick="changeStar(5)" id="star5" style="cursor: pointer;"></i>
-                  </div>
+              <h4 class="mb-4">Leave a review</h4>
+              <small>Your email address will not be published. Required fields are marked *</small>
+              <div class="d-flex my-3">
+                <p class="mb-0 mr-2">Your Rating * :</p>
+                <div class="text-primary">
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <form>
+                <div class="form-group">
+                  <label for="message">Your Review *</label>
+                  <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="content">Đánh giá của bạn *</label>
-                  <textarea id="content" name="content" cols="30" rows="5" class="form-control" required></textarea>
+                  <label for="name">Your Name *</label>
+                  <input type="text" class="form-control" id="name">
                 </div>
                 <div class="form-group">
-                  <label for="name">Tên của bạn *</label>
-                  <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email của bạn *</label>
-                  <input type="email" class="form-control" id="email" name="email" required>
+                  <label for="email">Your Email *</label>
+                  <input type="email" class="form-control" id="email">
                 </div>
                 <div class="form-group mb-0">
-                  <input type="hidden" name="id" value="${param.id}">
-                  <input type="submit" value="Để lại đánh giá của bạn" class="btn btn-primary px-3">
+                  <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
                 </div>
               </form>
             </div>
-
           </div>
         </div>
-
-
-
       </div>
     </div>
   </div>
@@ -323,23 +309,7 @@ $(document).ready(function() {
 });
 
 </script>
-<script>
-  // Hàm thay đổi số sao đánh giá
-  function changeStar(star) {
-    document.getElementById('star').value = star;
-    for (var i = 1; i <= 5; i++) {
-      var starElement = document.getElementById('star' + i);
-      if (i <= star) {
-        starElement.classList.remove('far');
-        starElement.classList.add('fas');
-      } else {
-        starElement.classList.remove('fas');
-        starElement.classList.add('far');
-      }
-    }
-  }
 
-</script>
 </body>
 
 </html>
