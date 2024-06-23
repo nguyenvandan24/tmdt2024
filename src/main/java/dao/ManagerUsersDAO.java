@@ -111,4 +111,41 @@ public class ManagerUsersDAO {
             }
         }
     }
+
+    public void lockUser(int userId) {
+        try {
+            String query = "UPDATE users SET roles = 2 WHERE id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle exception as needed
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void unLockUser(int userId) {
+        try {
+            String query = "UPDATE users SET roles = 1 WHERE id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle exception as needed
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
 }
