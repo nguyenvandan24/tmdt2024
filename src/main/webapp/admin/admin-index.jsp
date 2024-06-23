@@ -1,4 +1,17 @@
 <%@ page import="model.User" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page isELIgnored="false"%>
+<%--<%--%>
+<%--    // Check if the user has the admin role--%>
+<%--    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");--%>
+<%--    if (isAdmin == null || !isAdmin) {--%>
+<%--        // Redirect to an error page or the login page--%>
+<%--        response.sendRedirect("404.jsp"); // Change this to the actual error page or login page--%>
+<%--        return; // Ensure to stop further execution of the JSP--%>
+<%--    }--%>
+<%--%>--%>
 <!doctype html>
 <html lang="en">
 

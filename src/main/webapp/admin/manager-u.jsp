@@ -8,6 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
+<%--<%--%>
+<%--    // Check if the user has the admin role--%>
+<%--    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");--%>
+<%--    if (isAdmin == null || !isAdmin) {--%>
+<%--        // Redirect to an error page or the login page--%>
+<%--        response.sendRedirect("404.jsp"); // Change this to the actual error page or login page--%>
+<%--        return; // Ensure to stop further execution of the JSP--%>
+<%--    }--%>
+<%--%>--%>
 <html lang="en">
 
 <head>
@@ -55,11 +64,11 @@
                         <span class="hide-menu">UI COMPONENTS</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                        <a class="sidebar-link" href="/showUsersAdmin" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                            <span class="hide-menu">Buttons</span>
+                            <span class="hide-menu">Users</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -205,6 +214,7 @@
             <!--  User Management Table -->
             <div class="py-6 px-6">
                 <h2 class="mb-4">User Management</h2>
+                <a class="btn btn-primary" href="/admin/add-user.jsp">Add new user</a><br<br>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -228,10 +238,32 @@
                                 <td>${user.email}</td>
                                 <td>${user.phone}</td>
                                 <td>${user.address}</td>
-                                <td>${user.roles == 0 ? 'Admin' : 'User'}</td>
                                 <td>
-                                    <a href="#" class="text-primary me-2"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                                        <%-- Display role based on numeric value --%>
+                                    <c:choose>
+                                        <c:when test="${user.roles == 0}">
+                                            Admin
+                                        </c:when>
+                                        <c:when test="${user.roles == 1}">
+                                            User
+                                        </c:when>
+                                        <c:when test="${user.roles == 2}">
+                                            Locked
+                                        </c:when>
+                                        <c:otherwise>
+                                            Unknown Role
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${user.roles == 0 || user.roles == 1}">
+                                            <a href="lockUser?id=${user.id}" class="text-warning me-2"><i class="fas fa-lock"></i></a>
+                                        </c:when>
+                                        <c:when test="${user.roles == 2}">
+                                            <a href="unlockUser?id=${user.id}" class="text-success me-2"><i class="fas fa-unlock"></i></a>
+                                        </c:when>
+                                    </c:choose>
                                 </td>
                             </tr>
                         </c:forEach>
