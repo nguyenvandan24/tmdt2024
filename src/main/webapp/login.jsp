@@ -86,6 +86,11 @@
     background-color: #e4606d;
   }
 
+  .error {
+    color: red; /* Set the error message color to red */
+    font-size: small;
+    margin-top: 5px;
+  }
 </style>
 
 <body>
@@ -105,9 +110,11 @@
 
 <div class="container-login">
   <h2>Login</h2>
-  <c:if test="${not empty message}">
-    <p>${message}</p>
-  </c:if>
+  <div class="error">
+    <c:if test="${not empty message}">
+      <p>${message}</p>
+    </c:if>
+  </div>
   <form action="login" method="POST">
     <div class="form-group">
       <label for="username">Username</label>

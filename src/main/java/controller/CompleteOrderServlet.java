@@ -4,7 +4,6 @@ import dao.OrderDAO;
 import model.Cart;
 import model.Order;
 import model.OrderDetail;
-import model.OrderItem;
 import model.User;
 
 import javax.servlet.ServletException;

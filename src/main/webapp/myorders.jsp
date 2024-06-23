@@ -61,6 +61,7 @@
                     <th>Phương thức thanh toán</th>
                     <th>Trạng thái</th>
                     <th>Chi tiết</th>
+                    <th>Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,6 +74,11 @@
                     <td><%= order.getPaymentMethod() %></td>
                     <td><%= order.getStatus() %></td>
                     <td><a href="orderdetail.jsp?orderId=<%= order.getId() %>">Xem chi tiết</a></td>
+                    <td>
+                        <c:if test="${order.status eq 'Đang xử lý'}">
+                            <a href="orderdelete.jsp?orderId=<%= order.getId() %>">Hủy đơn hàng</a>
+                        </c:if>
+                    </td>
                 </tr>
                 <% }
                 } else { %>
