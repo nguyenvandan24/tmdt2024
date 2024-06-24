@@ -4,9 +4,6 @@ import com.google.gson.Gson;
 import model.Review;
 import model.User;
 import service.ReviewService;
-import model.User;
-import model.Review;
-import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,13 +38,14 @@ public class ReviewServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
 
+        long millis = System.currentTimeMillis();
+        java.sql.Timestamp date = new java.sql.Timestamp(millis);
+
         // Đảm bảo dữ liệu được truyền vào với định dạng UTF-8
         content = new String(content.getBytes("ISO-8859-1"), "UTF-8");
         name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
 
-        Review review = new Review(user.getId(), productId, content, star, status, name, email);
-
-        reviewService.saveReview(review);
+        reviewService.saveReview(user.getId(), productId, content, star, status, name, email, date);
 
         // Load all reviews for the product
         List<Review> reviews = reviewService.getAllReviewsByProductId(productId);
@@ -61,17 +59,29 @@ public class ReviewServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int productId = Integer.parseInt(request.getParameter("id"));
-        List<Review> reviews = reviewService.getAllReviewsByProductId(productId);
+//        int productId = Integer.parseInt(request.getParameter("id"));
+//        List<Review> reviews = reviewService.getAllReviewsByProductId(productId);
+//
+//        // Convert reviews list to JSON
+//        Gson gson = new Gson();
+//        String jsonReviews = gson.toJson(reviews);
+//
+//        // Set content type and write JSON to response
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("UTF-8");
+//        response.getWriter().write(jsonReviews);
 
-        // Convert reviews list to JSON
-        Gson gson = new Gson();
-        String jsonReviews = gson.toJson(reviews);
-
-        // Set content type and write JSON to response
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonReviews);
+//        int reviewId = Integer.parseInt(request.getParameter("reviewId"));
+//        Review review = reviewService.getReviewById(reviewId);
+//
+//        // Chuyển đổi đánh giá thành JSON
+//        Gson gson = new Gson();
+//        String jsonReview = gson.toJson(review);
+//
+//        // Thiết lập loại nội dung và ghi JSON vào phản hồi
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("UTF-8");
+//        response.getWriter().write(jsonReview);
     }
 }
 

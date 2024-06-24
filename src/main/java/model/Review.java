@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 public class Review {
     private int userId;
     private int productId;
@@ -8,8 +11,11 @@ public class Review {
     private String content;
     private int star;
     private int status;
+    private Timestamp date;
+    private int id;
 
-    public Review(int userId, int productId, String content, int star, int status, String name, String email) {
+    public Review(int id, int userId, int productId, String content, int star, int status, String name, String email, Timestamp date) {
+        this.id = id;
         this.userId = userId;
         this.productId = productId;
         this.content = content;
@@ -17,6 +23,24 @@ public class Review {
         this.status = status;
         this.name = name;
         this.email = email;
+        this.date = date;
+    }
+    public Review(int userId, int productId, String content, int star, int status, String name, String email, Timestamp date) {
+        this.userId = userId;
+        this.productId = productId;
+        this.content = content;
+        this.star = star;
+        this.status = status;
+        this.name = name;
+        this.email = email;
+        this.date = date;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
@@ -78,13 +102,15 @@ public class Review {
     @Override
     public String toString() {
         return "Review{" +
-                "userId=" + userId +
+                "id =" +id +
+                ", userId=" + userId +
                 ", productId=" + productId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", content='" + content + '\'' +
                 ", star=" + star +
                 ", status=" + status +
+                ", date=" + date +
                 '}';
     }
 }
