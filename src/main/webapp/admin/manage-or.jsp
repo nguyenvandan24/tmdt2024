@@ -93,6 +93,14 @@
                             <span class="hide-menu">Products</span>
                         </a>
                     </li>
+                     <li class="sidebar-item">
+                                                                              <a class="sidebar-link" href="/admin/reviews" aria-expanded="false">
+                                                                      <span>
+                                                                        <i class="ti ti-article"></i>
+                                                                      </span>
+                                                                                  <span class="hide-menu">Quản lý đánh giá</span>
+                                                                              </a>
+                                                                          </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="manage-or.jsp" aria-expanded="false">
                 <span>

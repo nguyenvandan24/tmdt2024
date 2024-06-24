@@ -13,14 +13,14 @@ public class Conn {
         }
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-//            String url = "jdbc:mysql://localhost:3306/tmdt";
-            String url = "jdbc:mysql://127.0.0.1:3306/tmdt3";
+            String url = "jdbc:mysql://localhost:3306/tmdt";
+//            String url = "jdbc:mysql://127.0.0.1:3306/tmdt3";
 //            String url = "jdbc:mysql://127.0.0.1:3306/tmdt";
             String user = "root";
 //            String pass = "24082002";
 //            String pass = "021202";
-            String pass = "123456789";
-//            String pass = "1234567890";
+//            String pass = "123456789";
+            String pass = "1234567890";
 
             connection =  DriverManager.getConnection(url, user, pass);
             return connection;
