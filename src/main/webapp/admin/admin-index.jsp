@@ -1,5 +1,4 @@
 <%@ page import="model.User" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
@@ -92,9 +91,9 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/getProd" aria-expanded="false">
+                        <a class="sidebar-link" href="/getPro" aria-expanded="false">
                 <span>
-                  <i class="fa-solid fa-list"></i>
+                    <i class="fa-solid fa-list"></i>
                 </span>
                             <span class="hide-menu">Products</span>
                         </a>
@@ -201,7 +200,6 @@
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                                aria-expanded="false">

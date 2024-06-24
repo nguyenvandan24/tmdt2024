@@ -181,7 +181,6 @@
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                                aria-expanded="false">
@@ -214,7 +213,7 @@
             <!--  User Management Table -->
             <div class="py-6 px-6">
                 <h2 class="mb-4">User Management</h2>
-                <a class="btn btn-primary" href="/admin/add-user.jsp">Add new user</a><br<br>
+                <a class="btn btn-primary" href="/admin/add-user.jsp">Add new user</a><br><br>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
