@@ -165,6 +165,7 @@
                             </div>
                         </div>
                         <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
+                        <a href="myorders.jsp" class="nav-item nav-link">My Order</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
                         <c:if test="${empty user}">

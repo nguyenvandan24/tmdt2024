@@ -226,4 +226,58 @@ public class OrderDAO {
         return orderDetails;
     }
 
+    // Update Order Status
+    public boolean updateOrderStatus(int orderId, String newStatus) {
+        String query = "UPDATE orders SET status = ? WHERE id = ?";
+        boolean success = false;
+        try {
+            conn = new Conn().getconnecttion();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, newStatus);
+            ps.setInt(2, orderId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                success = true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            // (rs and ps should be closed here as in other methods)
+        }
+        return success;
+    }
+
+    // Xóa đơn hàng
+    public boolean deleteOrder(int orderId) {
+        String deleteOrderQuery = "DELETE FROM orders WHERE id = ?";
+        boolean success = false;
+        try {
+            conn = new Conn().getconnecttion();
+            ps = conn.prepareStatement(deleteOrderQuery);
+            ps.setInt(1, orderId);
+            int rowsDeleted = ps.executeUpdate();
+            if (rowsDeleted > 0) {
+                success = true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return success;
+    }
 }
