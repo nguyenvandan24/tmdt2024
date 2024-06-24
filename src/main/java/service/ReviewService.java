@@ -86,6 +86,53 @@ public class ReviewService {
             e.printStackTrace();
         }
     }
+    //laydanh giá ccsdl
+    public static List<Review> getAllReviews() {
+        List<Review> list = new ArrayList<>();
+        String query = "SELECT * FROM rate";
+        try {
+            conn = new Conn().getconnecttion();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Review(
+
+                        rs.getInt("rateId"),
+                        rs.getInt("userId"),
+                        rs.getInt("productId"),
+                        rs.getString("content"),
+                        rs.getInt("star"),
+                        rs.getInt("status"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getTimestamp("date")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
+    public boolean deleteReviewById(int reviewId) {
+        String query = "DELETE FROM rate WHERE rateID = ?";
+
+        try (Connection conn = new Conn().getconnecttion();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, reviewId);
+
+            int rowsAffected = ps.executeUpdate();
+            System.out.println(rowsAffected + " row(s) deleted.");
+
+            return rowsAffected > 0; // Trả về true nếu có ít nhất một bản ghi đã được xóa
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error deleting review with ID " + reviewId, e);
+        }
+    }
+
 
     public static void main(String[] args) {
 //        System.out.println(getAllReviewsByProductId(1));
