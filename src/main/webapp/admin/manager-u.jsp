@@ -66,17 +66,17 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/showUsersAdmin" aria-expanded="false">
                 <span>
-                  <i class="ti ti-article"></i>
+                  <i class="fa-solid fa-user"></i>
                 </span>
                             <span class="hide-menu">Users</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                        <a class="sidebar-link" href="/getPro" aria-expanded="false">
                 <span>
-                  <i class="ti ti-alert-circle"></i>
+                    <i class="fa-solid fa-list"></i>
                 </span>
-                            <span class="hide-menu">Alerts</span>
+                            <span class="hide-menu">Products</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

@@ -2,20 +2,20 @@
   Created by IntelliJ IDEA.
   User: DELL
   Date: 6/23/2024
-  Time: 10:19 AM
+  Time: 12:28 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
 <%--<%--%>
-<%--  // Check if the user has the admin role--%>
-<%--  Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");--%>
-<%--  if (isAdmin == null || !isAdmin) {--%>
-<%--    // Redirect to an error page or the login page--%>
-<%--    response.sendRedirect("404.jsp"); // Change this to the actual error page or login page--%>
-<%--    return; // Ensure to stop further execution of the JSP--%>
-<%--  }--%>
+<%--    // Check if the user has the admin role--%>
+<%--    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");--%>
+<%--    if (isAdmin == null || !isAdmin) {--%>
+<%--        // Redirect to an error page or the login page--%>
+<%--        response.sendRedirect("404.jsp"); // Change this to the actual error page or login page--%>
+<%--        return; // Ensure to stop further execution of the JSP--%>
+<%--    }--%>
 <%--%>--%>
 <html lang="en">
 
@@ -26,52 +26,15 @@
   <link rel="shortcut icon" type="image/png" href="../admin/assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../admin/assets/css/styles.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <style>
-    /* Custom styles for the form */
-    .form-container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    .delete-icon {
+      color: red; /* Thiết lập màu chữ của icon xóa là màu đỏ */
     }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    .form-group button {
-      padding: 12px 20px;
-      font-size: 18px;
-      background-color: #007bff;
-      color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .form-group button:hover {
-      background-color: #0056b3;
-    }
-    .error {
-      color: red; /* Set the error message color to red */
-      font-size: small;
-      margin-top: 5px;
+    .pagination-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -259,53 +222,73 @@
     </header>
     <!--  Header End -->
     <div class="container-fluid">
-      <div class="py-4">
-        <h2 class="text-center mb-4">Add User</h2>
-        <div class="form-container">
-          <form id="registerForm" action="/add-user" method="POST">
-            <p class="text-danger">${errorMessage}</p>
-            <div class="form-group">
-              <label for="fullname">Full Name</label>
-              <input type="text" id="fullname" name="fullname" placeholder="Enter your full name." required>
-              <span id="fullnameError" class="error"></span>
-            </div>
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" id="username" name="username" placeholder="Enter your username." required>
-              <span id="usernameError" class="error"></span>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="Enter your email." required>
-              <span id="emailError" class="error"></span>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-              <span id="phoneError" class="error"></span>
-            </div>
-            <div class="form-group">
-              <label for="address">Address</label>
-              <input type="text" id="address" name="address" placeholder="Enter your address." required>
-              <span id="addressError" class="error"></span>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" placeholder="Enter your password." required>
-              <span id="passwordError" class="error"></span>
-            </div>
-            <div class="form-group">
-              <label for="repassword">Confirm Password</label>
-              <input type="password" id="repassword" name="repassword" placeholder="Enter your password again." required>
-              <span id="repasswordError" class="error"></span>
-            </div>
-            <div class="form-group">
-              <button type="submit">Add User</button>
-            </div>
-          </form>
+      <!--  User Management Table -->
+      <div class="py-6 px-6">
+        <h2 class="mb-4">User Management</h2>
+        <a class="btn btn-primary" href="/admin/add-user.jsp">Add new product</a><br><br>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>ID Product</th>
+              <th>ID Category</th>
+              <th>Product name</th>
+              <th>Image</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Color</th>
+              <th>Size</th>
+              <th>Period</th>
+              <th>Quantity</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="product" items="${productList}">
+              <tr>
+                <td>${product.proID}</td>
+                <td>${product.catID}</td>
+                <td>${product.namePro}</td>
+                <td><img src="${product.img}" alt="${product.namePro}" style="width: 50px; height: auto;"></td>
+                <td>${product.price}</td>
+                <td>${product.description}</td>
+                <td>${product.color}</td>
+                <td>${product.size}</td>
+                <td>${product.period}</td>
+                <td>${product.quantity}</td>
+                <td>
+                  <a href="#" title="Edit"><i class="fas fa-edit"></i></a>
+                  <a href="#" title="Delete"><i class="fas fa-trash-alt delete-icon"></i></a>
+                </td>
+              </tr>
+            </c:forEach>
+            </tbody>
+          </table>
         </div>
+        <c:if test="${totalPages > 1}">
+          <div class="pagination-wrapper">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <c:if test="${currentPage > 1}">
+                  <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/getPro?page=${currentPage - 1}">Previous</a>
+                  </li>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                  <li class="page-item ${i == currentPage ? 'active' : ''}">
+                    <a class="page-link" href="${pageContext.request.contextPath}/getPro?page=${i}">${i}</a>
+                  </li>
+                </c:forEach>
+                <c:if test="${currentPage < totalPages}">
+                  <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/getPro?page=${currentPage + 1}">Next</a>
+                  </li>
+                </c:if>
+              </ul>
+            </nav>
+          </div>
+        </c:if>
       </div>
-
       <!--  Footer -->
       <div class="py-6 text-center">
         <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
@@ -320,8 +303,6 @@
 <script src="../admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 <script src="../admin/assets/libs/simplebar/dist/simplebar.js"></script>
 <script src="../admin/assets/js/dashboard.js"></script>
-
-<script src="../admin/assets/js/register.js"></script>
 </body>
 
 </html>
