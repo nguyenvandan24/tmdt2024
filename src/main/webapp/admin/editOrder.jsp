@@ -1,34 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: DELL
-  Date: 6/22/2024
-  Time: 11:16 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page isELIgnored="false"%>
-<%--<%--%>
-<%--    // Check if the user has the admin role--%>
-<%--    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");--%>
-<%--    if (isAdmin == null || !isAdmin) {--%>
-<%--        // Redirect to an error page or the login page--%>
-<%--        response.sendRedirect("404.jsp"); // Change this to the actual error page or login page--%>
-<%--        return; // Ensure to stop further execution of the JSP--%>
-<%--    }--%>
-<%--%>--%>
-<html lang="en">
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="dao.ManageOrdersDAO" %>
+<%@ page import="model.Order" %>
+<%@ page import="model.OrderDetail" %>
+<%@ page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modernize Free</title>
+    <title>Duyệt đơn hàng</title>
+
     <link rel="shortcut icon" type="image/png" href="../admin/assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../admin/assets/css/styles.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
+
 <!--  Body Wrapper -->
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
@@ -72,9 +60,9 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/getPro" aria-expanded="false">
+                        <a class="sidebar-link" href="/getProd" aria-expanded="false">
                 <span>
-                    <i class="fa-solid fa-list"></i>
+                  <i class="fa-solid fa-list"></i>
                 </span>
                             <span class="hide-menu">Products</span>
                         </a>
@@ -160,6 +148,7 @@
         </div>
         <!-- End Sidebar scroll-->
     </aside>
+
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -181,6 +170,7 @@
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                        <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                                aria-expanded="false">
@@ -209,82 +199,93 @@
             </nav>
         </header>
         <!--  Header End -->
+
         <div class="container-fluid">
             <!--  User Management Table -->
             <div class="py-6 px-6">
-                <h2 class="mb-4">User Management</h2>
-                <a class="btn btn-primary" href="/admin/add-user.jsp">Add new user</a><br><br>
-                <div class="table-responsive">
+                <h2 class="mb-4">Thông tin đơn hàng</h2>
+                    <%
+                        String orderIdStr = request.getParameter("orderId");
+                        if (orderIdStr == null) {
+                            response.sendRedirect("404.jsp");
+                        return;
+                        }
+
+                        int orderId = Integer.parseInt(orderIdStr);
+                        ManageOrdersDAO mnorderDAO = new ManageOrdersDAO();
+                        Order order = mnorderDAO.getOrderById(orderId);
+                        if (order == null) {
+                            response.sendRedirect("404.jsp");
+                        return;
+                        }
+
+                         List<OrderDetail> orderDetails = mnorderDAO.getOrderDetailsByOrderId(orderId);
+                    %>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"> </h5>
+                        <p>Mã đơn hàng: <%= order.getId() %></p>
+                        <p>Ngày đặt hàng: <fmt:formatDate value="<%= order.getOrderTime() %>" pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                        <p>Tổng tiền: <%= order.getTotalCost() %> VND</p>
+                        <p>Phương thức thanh toán: <%= order.getPaymentMethod() %></p>
+                        <p>Trạng thái đơn hàng: <%= order.getStatus() %></p>
+
+                        <!-- Status Update Form -->
+                        <form action="updateOrderStatus.jsp" method="post">
+                            <input type="hidden" name="orderId" value="<%= order.getId() %>">
+                            <div class="form-group">
+                                <label for="status">Cập nhật trạng thái đơn hàng:</label>
+                                <select class="form-control" id="status" name="status">
+                                    <option value="Đã duyệt đơn hàng">Đã duyệt đơn hàng</option>
+                                    <option value="Đang giao hàng">Đang giao hàng</option>
+                                    <option value="Giao hàng thành công">Giao hàng thành công</option>
+                                    <option value="Huỷ đơn hàng">Hủy đơn hàng</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Cập nhật</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h5> </h5>
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Roles</th>
-                            <th>Actions</th>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Thành tiền</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="user" items="${users}">
-                            <tr>
-                                <td>${user.id}</td>
-                                <td>${user.fullname}</td>
-                                <td>${user.username}</td>
-                                <td>${user.email}</td>
-                                <td>${user.phone}</td>
-                                <td>${user.address}</td>
-                                <td>
-                                        <%-- Display role based on numeric value --%>
-                                    <c:choose>
-                                        <c:when test="${user.roles == 0}">
-                                            Admin
-                                        </c:when>
-                                        <c:when test="${user.roles == 1}">
-                                            User
-                                        </c:when>
-                                        <c:when test="${user.roles == 2}">
-                                            Locked
-                                        </c:when>
-                                        <c:otherwise>
-                                            Unknown Role
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${user.roles == 0 || user.roles == 1}">
-                                            <a href="lockUser?id=${user.id}" class="text-warning me-2"><i class="fas fa-lock"></i></a>
-                                        </c:when>
-                                        <c:when test="${user.roles == 2}">
-                                            <a href="unlockUser?id=${user.id}" class="text-success me-2"><i class="fas fa-unlock"></i></a>
-                                        </c:when>
-                                    </c:choose>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        <!-- Add more user rows as needed -->
+                        <% int stt = 1;
+                            double total = 0;
+                            for (OrderDetail detail : orderDetails) {
+                                double amount = detail.getPrice() * detail.getQuantity();
+                                total += amount;
+                        %>
+                        <tr>
+                            <th scope="row"><%= stt++ %></th>
+                            <td><%= new String(((String) detail.getNamePro()).getBytes("ISO-8859-1"), "UTF-8") %></td>
+                            <td><%= detail.getPrice() %> VND</td>
+                            <td><%= detail.getQuantity() %></td>
+                            <td><%= amount %> VND</td>
+                        </tr>
+                        <% } %>
                         </tbody>
+                        <tfoot>
+                        <%--            <tr>--%>
+                        <%--                <th colspan="4">Tổng cộng</th>--%>
+                        <%--                <th><%= total %> VND</th>--%>
+                        <%--            </tr>--%>
+                        </tfoot>
                     </table>
                 </div>
-            </div>
-            <!--  Footer -->
-            <div class="py-6 text-center">
-                <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
             </div>
         </div>
     </div>
 </div>
-<script src="../admin/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="../admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../admin/assets/js/sidebarmenu.js"></script>
-<script src="../admin/assets/js/app.min.js"></script>
-<script src="../admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-<script src="../admin/assets/libs/simplebar/dist/simplebar.js"></script>
-<script src="../admin/assets/js/dashboard.js"></script>
 </body>
-
 </html>

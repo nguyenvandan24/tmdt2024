@@ -91,11 +91,11 @@
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+            <a class="sidebar-link" href="manage-or.jsp" aria-expanded="false">
                 <span>
                   <i class="ti ti-cards"></i>
                 </span>
-              <span class="hide-menu">Card</span>
+              <span class="hide-menu">Orders</span>
             </a>
           </li>
           <li class="sidebar-item">

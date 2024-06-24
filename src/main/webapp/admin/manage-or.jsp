@@ -1,34 +1,48 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: DELL
-  Date: 6/22/2024
-  Time: 11:16 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page isELIgnored="false"%>
-<%--<%--%>
-<%--    // Check if the user has the admin role--%>
-<%--    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");--%>
-<%--    if (isAdmin == null || !isAdmin) {--%>
-<%--        // Redirect to an error page or the login page--%>
-<%--        response.sendRedirect("404.jsp"); // Change this to the actual error page or login page--%>
-<%--        return; // Ensure to stop further execution of the JSP--%>
-<%--    }--%>
-<%--%>--%>
-<html lang="en">
+<%@ page import="model.Order" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dao.ManageOrdersDAO" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>--%>
+<%--<%@page isELIgnored="false"%>--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modernize Free</title>
+    <title>Manage Orders</title>
+
     <link rel="shortcut icon" type="image/png" href="../admin/assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../admin/assets/css/styles.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
 
+    <style>
+        .delete-icon {
+            color: red;
+        }
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .table-custom th, .table-custom td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+        .table-custom th {
+            background-color: #f8f9fa;
+        }
+        .table-custom tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .table-wrapper {
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
+
 <!--  Body Wrapper -->
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
@@ -72,9 +86,9 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/getPro" aria-expanded="false">
+                        <a class="sidebar-link" href="/getProd" aria-expanded="false">
                 <span>
-                    <i class="fa-solid fa-list"></i>
+                  <i class="fa-solid fa-list"></i>
                 </span>
                             <span class="hide-menu">Products</span>
                         </a>
@@ -181,6 +195,7 @@
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                        <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                                aria-expanded="false">
@@ -212,65 +227,80 @@
         <div class="container-fluid">
             <!--  User Management Table -->
             <div class="py-6 px-6">
-                <h2 class="mb-4">User Management</h2>
-                <a class="btn btn-primary" href="/admin/add-user.jsp">Add new user</a><br><br>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Roles</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="user" items="${users}">
+                <h2 class="mb-4">Order Management</h2>
+                <%
+                    ManageOrdersDAO mnorderDAO = new ManageOrdersDAO();
+                    List<Order> orders = mnorderDAO.getOrders();
+                %>
+                <div class="table-wrapper">
+                    <div class="table-responsive">
+                        <table class="table table-custom table-striped table-hover">
+                            <thead>
                             <tr>
-                                <td>${user.id}</td>
-                                <td>${user.fullname}</td>
-                                <td>${user.username}</td>
-                                <td>${user.email}</td>
-                                <td>${user.phone}</td>
-                                <td>${user.address}</td>
+                                <th>ID</th>
+                                <th>User ID</th>
+                                <th>Order Time</th>
+                                <th>Phone</th>
+                                <th>Province</th>
+                                <th>District</th>
+                                <th>Ward</th>
+                                <th>Address</th>
+                                <th>Payment Method</th>
+                                <th>Total Cost</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% if (orders != null && !orders.isEmpty()) {
+                                for (Order order : orders) { %>
+                            <tr>
+                                <td><%= order.getId() %></td>
+                                <td><%= order.getUserID() %></td>
+                                <td><fmt:formatDate value="<%= order.getOrderTime() %>" pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                                <td><%= order.getPhone() %></td>
+                                <td><%= new String(((String) order.getProvince()).getBytes("ISO-8859-1"), "UTF-8") %></td>
+                                <td><%= new String(((String) order.getDistrict()).getBytes("ISO-8859-1"), "UTF-8") %></td>
+                                <td><%= new String(((String) order.getWard()).getBytes("ISO-8859-1"), "UTF-8") %></td>
+                                <td><%= new String(((String) order.getAddress()).getBytes("ISO-8859-1"), "UTF-8") %></td>
+                                <td><%= order.getPaymentMethod() %></td>
+                                <td><%= order.getTotalCost() %></td>
+                                <td><%= new String(((String) order.getStatus()).getBytes("ISO-8859-1"), "UTF-8") %></td>
                                 <td>
-                                        <%-- Display role based on numeric value --%>
-                                    <c:choose>
-                                        <c:when test="${user.roles == 0}">
-                                            Admin
-                                        </c:when>
-                                        <c:when test="${user.roles == 1}">
-                                            User
-                                        </c:when>
-                                        <c:when test="${user.roles == 2}">
-                                            Locked
-                                        </c:when>
-                                        <c:otherwise>
-                                            Unknown Role
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${user.roles == 0 || user.roles == 1}">
-                                            <a href="lockUser?id=${user.id}" class="text-warning me-2"><i class="fas fa-lock"></i></a>
-                                        </c:when>
-                                        <c:when test="${user.roles == 2}">
-                                            <a href="unlockUser?id=${user.id}" class="text-success me-2"><i class="fas fa-unlock"></i></a>
-                                        </c:when>
-                                    </c:choose>
+                                    <a href="editOrder.jsp?orderId=<%= order.getId() %>" title="Edit"><i class="fas fa-edit"></i></a>
+<%--                                    <a href="#" title="Delete"><i class="fas fa-trash-alt delete-icon"></i></a>--%>
                                 </td>
                             </tr>
-                        </c:forEach>
-                        <!-- Add more user rows as needed -->
-                        </tbody>
-                    </table>
+                            <% }
+                            } %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+<%--                <c:if test="${totalPages > 1}">--%>
+<%--                    <div class="pagination-wrapper">--%>
+<%--                        <nav aria-label="Page navigation">--%>
+<%--                            <ul class="pagination">--%>
+<%--                                <c:if test="${currentPage > 1}">--%>
+<%--                                    <li class="page-item">--%>
+<%--                                        <a class="page-link" href="${pageContext.request.contextPath}/showOrders?page=${currentPage - 1}">Previous</a>--%>
+<%--                                    </li>--%>
+<%--                                </c:if>--%>
+<%--                                <c:forEach var="i" begin="1" end="${totalPages}">--%>
+<%--                                    <li class="page-item ${i == currentPage ? 'active' : ''}">--%>
+<%--                                        <a class="page-link" href="${pageContext.request.contextPath}/showOrders?page=${i}">${i}</a>--%>
+<%--                                    </li>--%>
+<%--                                </c:forEach>--%>
+<%--                                <c:if test="${currentPage < totalPages}">--%>
+<%--                                    <li class="page-item">--%>
+<%--                                        <a class="page-link" href="${pageContext.request.contextPath}/showOrders?page=${currentPage + 1}">Next</a>--%>
+<%--                                    </li>--%>
+<%--                                </c:if>--%>
+<%--                            </ul>--%>
+<%--                        </nav>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
             <!--  Footer -->
             <div class="py-6 text-center">
                 <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
@@ -278,6 +308,7 @@
         </div>
     </div>
 </div>
+
 <script src="../admin/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="../admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../admin/assets/js/sidebarmenu.js"></script>
@@ -285,6 +316,6 @@
 <script src="../admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 <script src="../admin/assets/libs/simplebar/dist/simplebar.js"></script>
 <script src="../admin/assets/js/dashboard.js"></script>
-</body>
 
+</body>
 </html>

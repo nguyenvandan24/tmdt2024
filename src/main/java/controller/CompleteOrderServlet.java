@@ -74,7 +74,7 @@ public class CompleteOrderServlet extends HttpServlet {
         order.setTotalCost(totalCost);
         order.setOrderTime(new Timestamp(System.currentTimeMillis()));
 //        order.setOrderItems(orderItems);
-        order.setStatus("Đang xử lý");
+        order.setStatus("Dang xu ly");
 
         try {
             int orderId = orderDAO.saveOrder(order);
