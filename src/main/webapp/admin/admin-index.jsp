@@ -1,5 +1,6 @@
+<%@ page import="model.User" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
 <%--<%--%>
@@ -20,7 +21,6 @@
     <title>Modernize Free</title>
     <link rel="shortcut icon" type="image/png" href="../admin/assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../admin/assets/css/styles.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -100,11 +100,11 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="manage-or.jsp" aria-expanded="false">
+                        <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-cards"></i>
                 </span>
-                            <span class="hide-menu">Orders</span>
+                            <span class="hide-menu">Card</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

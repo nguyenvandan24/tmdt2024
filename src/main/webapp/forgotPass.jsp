@@ -26,7 +26,7 @@
   <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
   <!-- Customized Bootstrap Stylesheet -->
-<%--  <link href="css/style.css" rel="stylesheet">--%>
+  <%--  <link href="css/style.css" rel="stylesheet">--%>
 </head>
 <style>
   body {
@@ -36,7 +36,7 @@
     padding: 0;
   }
 
-  .container-login {
+  .container-forgot {
     width: 40%;
     margin: 50px auto;
     background-color: #fff;
@@ -78,14 +78,6 @@
     cursor: pointer;
   }
 
-  .forgot-password{
-    padding-bottom: 10px;
-  }
-
-  button:hover {
-    background-color: #e4606d;
-  }
-
   .error {
     color: red; /* Set the error message color to red */
     font-size: small;
@@ -107,29 +99,28 @@
   </div>
 </div>
 <!-- Page Header End -->
-
+<!-- Password Reset Section -->
 <div class="container-login">
-  <h2>Login</h2>
-  <div class="error">
-    <c:if test="${not empty message}">
-      <p>${message}</p>
-    </c:if>
-  </div>
-  <form action="login" method="POST">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" placeholder="Enter your username." required>
+  <%-- Existing form code --%>
+
+    <div class="container mt-5">
+      <h2 class="mb-4">Forgot Password</h2>
+      <form action="forgotPass" method="post">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Reset Password</button>
+      </form>
+
+      <%-- Display new password if it exists --%>
+      <c:if test="${not empty newPassword}">
+        <div class="alert alert-success mt-3">
+          Your new password is: <strong>${newPassword}</strong><br>
+          Please remember to change it after logging in.
+        </div>
+      </c:if>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Enter your password." required>
-    </div>
-    <div class="forgot-password">
-      <a href="forgotPass.jsp">Forgot Password?</a>
-    </div>
-    <button type="submit">Login</button>
-  </form>
-</div>
 
 <!-- Footer Start -->
 <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
@@ -215,7 +206,7 @@
 <!-- Contact Javascript File -->
 <script src="mail/jqBootstrapValidation.min.js"></script>
 <script src="mail/contact.js"></script>
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 </body>
