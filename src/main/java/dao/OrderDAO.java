@@ -255,4 +255,29 @@ public class OrderDAO {
         return success;
     }
 
+    // Xóa đơn hàng
+    public boolean deleteOrder(int orderId) {
+        String deleteOrderQuery = "DELETE FROM orders WHERE id = ?";
+        boolean success = false;
+        try {
+            conn = new Conn().getconnecttion();
+            ps = conn.prepareStatement(deleteOrderQuery);
+            ps.setInt(1, orderId);
+            int rowsDeleted = ps.executeUpdate();
+            if (rowsDeleted > 0) {
+                success = true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return success;
+    }
 }

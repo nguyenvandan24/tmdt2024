@@ -3,6 +3,7 @@
 <%@page import="model.Order" %>
 <%@page import="model.User" %>
 <%@page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
@@ -74,11 +75,7 @@
                     <td><%= order.getPaymentMethod() %></td>
                     <td><%= order.getStatus() %></td>
                     <td><a href="orderdetail.jsp?orderId=<%= order.getId() %>">Xem chi tiết</a></td>
-                    <td>
-                        <c:if test="${order.status eq 'Đang xử lý'}">
-                            <a href="orderdelete.jsp?orderId=<%= order.getId() %>">Hủy đơn hàng</a>
-                        </c:if>
-                    </td>
+                    <td><a href="orderdelete?orderId=<%= order.getId() %>">Hủy đơn hàng</a></td>
                 </tr>
                 <% }
                 } else { %>
