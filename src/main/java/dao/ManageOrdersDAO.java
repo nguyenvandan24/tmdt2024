@@ -10,101 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDAO {
+public class ManageOrdersDAO {
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
 
-    // Save Order to Database
-    public int saveOrder(Order order) {
-        String query = "INSERT INTO orders (userID, orderTime, phone, province, district, ward, address, paymentMethod, totalCost, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        int orderId = -1;
-        try {
-            conn = new Conn().getconnecttion();// mo ket noi
-            ps = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);// nem lenh query
-//            rs = ps.executeQuery();
-
-            ps.setInt(1, order.getUserID());
-            ps.setTimestamp(2, order.getOrderTime());
-            ps.setString(3, order.getPhone());
-            ps.setString(4, order.getProvince());
-            ps.setString(5, order.getDistrict());
-            ps.setString(6, order.getWard());
-            ps.setString(7, order.getAddress());
-            ps.setString(8, order.getPaymentMethod());
-            ps.setDouble(9, order.getTotalCost());
-            ps.setString(10, order.getStatus());
-
-
-            // Execute update
-            ps.executeUpdate();
-
-            // Lấy ID tự động sinh
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                orderId = rs.getInt(1); // Lấy ID của đơn hàng
-            }
-        } catch (Exception ex) {
-            // Xử lý ngoại lệ nếu có
-            ex.printStackTrace();
-            // Có thể ném một ngoại lệ hoặc thông báo lỗi khác tùy thuộc vào yêu cầu
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            // Đóng PreparedStatement
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return orderId;
-    }
-
-    // Lưu chi tiết đơn hàng vào cơ sở dữ liệu
-    public void saveOrderDetail(OrderDetail detail) {
-        String query = "INSERT INTO orderDetail (orderId, productID, namePro, price, quantity) VALUES (?, ?, ?, ?, ?)";
-        try {
-            conn = new Conn().getconnecttion(); // Mở kết nối
-            ps = conn.prepareStatement(query); // Chuẩn bị lệnh SQL
-
-            ps.setInt(1, detail.getOrderId());         // Order ID (foreign key)
-            ps.setInt(2, detail.getProductID()); // Product ID
-            ps.setString(3, detail.getNamePro()); // Product name
-            ps.setDouble(4, detail.getPrice());   // Product price
-            ps.setInt(5, detail.getQuantity());  // Quantity ordered
-
-            // Thực thi lệnh SQL
-            ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } finally {
-            // Đóng PreparedStatement
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    // Get Orders by User ID
-    public List<Order> getOrdersByUserId(int userId) {
+    // lây tất cả đơn hàng của các user
+    public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
-        String query = "SELECT * FROM orders WHERE userID = ?";
+        String query = "SELECT * FROM orders";
         try {
             conn = new Conn().getconnecttion();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, userId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Order order = new Order();
@@ -142,7 +59,36 @@ public class OrderDAO {
         return orders;
     }
 
-    // Retrieve Order by ID
+    // update trạng thái của đơn hàng
+    public boolean updateOrder(int orderId, String newStatus) {
+        String query = "UPDATE orders SET status = ? WHERE id = ?";
+        boolean success = false;
+        try {
+            conn = new Conn().getconnecttion();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, newStatus);
+            ps.setInt(2, orderId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                success = true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            // (rs and ps should be closed here as in other methods)
+        }
+        return success;
+    }
+
+    // lấy thông tin chi tiết của 1 đh
     public Order getOrderById(int orderId) {
         Order order = null;
         String query = "SELECT * FROM orders WHERE id = ?";
@@ -186,7 +132,6 @@ public class OrderDAO {
         return order;
     }
 
-    // Retrieve Order Details by Order ID
     public List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
         List<OrderDetail> orderDetails = new ArrayList<>();
         String query = "SELECT * FROM orderDetail WHERE orderId = ?";
@@ -225,34 +170,4 @@ public class OrderDAO {
         }
         return orderDetails;
     }
-
-    // Update Order Status
-    public boolean updateOrderStatus(int orderId, String newStatus) {
-        String query = "UPDATE orders SET status = ? WHERE id = ?";
-        boolean success = false;
-        try {
-            conn = new Conn().getconnecttion();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, newStatus);
-            ps.setInt(2, orderId);
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                success = true;
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            // (rs and ps should be closed here as in other methods)
-        }
-        return success;
-    }
-
 }
