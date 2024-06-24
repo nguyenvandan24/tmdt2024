@@ -1,5 +1,6 @@
 package dao;
 
+import model.EncryptPass;
 import model.User;
 
 import java.sql.Connection;
@@ -107,6 +108,32 @@ public class UserDAO {
         return null;
 
     }
+
+    public void updatePassword(String username, String newPassword) {
+        try {
+            // Mã hóa mật khẩu mới trước khi cập nhật vào cơ sở dữ liệu
+            String hashedPassword = EncryptPass.toSHA1(newPassword);
+
+            String query = "UPDATE users SET upassword = ? WHERE userName = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, hashedPassword);
+            ps.setString(2, username);
+
+            // Thực thi câu lệnh update
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Xử lý ngoại lệ tại đây nếu cần
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
 }
